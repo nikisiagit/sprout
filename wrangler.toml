@@ -5,4 +5,4 @@ pages_build_output_dir = "dist"
 [[d1_databases]]
 binding = "DB"
 database_name = "sprout-db"
-database_id = "Put your D1 Database ID here"
+database_id = "a5461010-dba6-4109-8deb-dea89054d193"
