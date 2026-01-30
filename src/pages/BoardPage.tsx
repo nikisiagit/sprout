@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { Search, Share2, ClipboardCheck } from 'lucide-react';
+import { useParams, Link } from 'react-router-dom';
+import { Search, Share2, ClipboardCheck, LogIn, LogOut } from 'lucide-react';
 import logo from '../assets/sprout-wordmark.png';
 import { Sidebar } from '../components/Sidebar';
 import { IdeaCard } from '../components/IdeaCard';
@@ -10,7 +10,8 @@ import type { Idea, Comment, Status } from '../types';
 
 export function BoardPage() {
     const { slug } = useParams<{ slug: string }>();
-    const productName = slug ? slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : 'Product';
+    const [spaceName, setSpaceName] = useState('');
+    const productName = spaceName || (slug ? slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : 'Product');
 
     const [activeFilter, setActiveFilter] = useState('new');
     const [searchQuery, setSearchQuery] = useState('');
@@ -28,11 +29,30 @@ export function BoardPage() {
     const [ideas, setIdeas] = useState<Idea[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    // Owner state
+    const [isOwner, setIsOwner] = useState(false);
+
     useEffect(() => {
         if (slug) {
+            fetchSpaceInfo();
             fetchIdeas();
         }
     }, [slug]);
+
+    const fetchSpaceInfo = async () => {
+        try {
+            const response = await fetch(`/api/spaces/${slug}`);
+            if (response.ok) {
+                const data = await response.json() as any;
+                setIsOwner(data.isOwner);
+                if (data.space) {
+                    setSpaceName(data.space.name);
+                }
+            }
+        } catch (error) {
+            console.error('Failed to fetch space info', error);
+        }
+    };
 
     const fetchIdeas = async () => {
         try {
@@ -46,6 +66,11 @@ export function BoardPage() {
         } finally {
             setIsLoading(false);
         }
+    };
+
+    const handleLogout = async () => {
+        await fetch('/api/auth/logout', { method: 'POST' });
+        setIsOwner(false);
     };
 
     const handleVote = async (id: string, e: React.MouseEvent) => {
@@ -198,7 +223,24 @@ export function BoardPage() {
                         </h1>
                         <p className="header-subtitle">Community tool for product improvements</p>
                     </div>
-                    <div style={{ display: 'flex', gap: '10px' }}>
+                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                        {isOwner ? (
+                            <button
+                                className="btn-secondary"
+                                onClick={handleLogout}
+                                style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+                            >
+                                <LogOut size={16} /> Logout
+                            </button>
+                        ) : (
+                            <Link
+                                to={`/login?redirect=/space/${slug}`}
+                                className="btn-secondary"
+                                style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}
+                            >
+                                <LogIn size={16} /> Owner Login
+                            </Link>
+                        )}
                         <button className="btn-secondary" onClick={handleShare} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                             {isCopied ? <ClipboardCheck size={16} /> : <Share2 size={16} />}
                             {isCopied ? 'Copied Link' : 'Share'}

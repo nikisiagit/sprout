@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
 import logo from '../assets/sprout-wordmark.png';
 
@@ -8,6 +8,7 @@ export function LoginPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -27,8 +28,11 @@ export function LoginPage() {
                 throw new Error(data.error || 'Failed to log in');
             }
 
-            // If user has spaces, redirect to first space
-            if (data.spaces && data.spaces.length > 0) {
+            // Check for redirect param first
+            const redirectTo = searchParams.get('redirect');
+            if (redirectTo) {
+                navigate(redirectTo);
+            } else if (data.spaces && data.spaces.length > 0) {
                 navigate(`/space/${data.spaces[0].slug}`);
             } else {
                 navigate('/');
