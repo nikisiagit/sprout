@@ -1,40 +1,43 @@
 import { Lightbulb, Loader2, Ban, CheckCircle, List, ChevronDown } from 'lucide-react';
+import type { Idea } from '../types';
+import { format } from 'date-fns';
 import './Sidebar.css';
 
 interface SidebarProps {
     activeFilter: string;
     onFilterChange: (filter: string) => void;
+    ideas: Idea[];
 }
 
-export function Sidebar({ activeFilter, onFilterChange }: SidebarProps) {
+export function Sidebar({ activeFilter, onFilterChange, ideas }: SidebarProps) {
+    const counts = {
+        new: ideas.filter(i => i.status === 'new').length,
+        'in-progress': ideas.filter(i => i.status === 'in-progress').length,
+        rejected: ideas.filter(i => i.status === 'rejected').length,
+        done: ideas.filter(i => i.status === 'done').length,
+        all: ideas.length
+    };
+
     const filters = [
-        { id: 'new', label: 'New idea', icon: Lightbulb, count: 587 },
-        { id: 'in-progress', label: 'In progress', icon: Loader2, count: 20 },
-        { id: 'rejected', label: 'Rejected', icon: Ban, count: 68 },
-        { id: 'done', label: 'Done', icon: CheckCircle, count: 466 },
-        { id: 'all', label: 'All', icon: List, count: 1141 },
+        { id: 'new', label: 'New idea', icon: Lightbulb, count: counts.new },
+        { id: 'in-progress', label: 'In progress', icon: Loader2, count: counts['in-progress'] },
+        { id: 'rejected', label: 'Rejected', icon: Ban, count: counts.rejected },
+        { id: 'done', label: 'Done', icon: CheckCircle, count: counts.done },
+        { id: 'all', label: 'All', icon: List, count: counts.all },
     ];
 
-    const recentComments = [
-        {
-            id: 1,
-            date: '29 January 2026, 23:24',
-            text: 'Is it possible to move messages when creating a folder...',
-            idea: 'Sorting'
-        },
-        {
-            id: 2,
-            date: '29 January 2026, 17:23',
-            text: 'message',
-            idea: 'Calendar'
-        },
-        {
-            id: 3,
-            date: '29 January 2026, 17:21',
-            text: 'Idea: Calendar',
-            idea: 'Calendar'
-        }
-    ];
+    // Get all comments with idea details, flattened
+    const allComments = ideas.flatMap(idea =>
+        idea.comments.map(comment => ({
+            ...comment,
+            ideaTitle: idea.title
+        }))
+    );
+
+    // Sort by date desc and take top 5
+    const recentComments = allComments
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        .slice(0, 5);
 
     return (
         <div className="sidebar-container">
@@ -64,13 +67,19 @@ export function Sidebar({ activeFilter, onFilterChange }: SidebarProps) {
 
                 <div className="comments-section">
                     <h3>New comments</h3>
-                    {recentComments.map((comment) => (
-                        <div key={comment.id} className="comment-preview">
-                            <span className="comment-date">{comment.date}</span>
-                            <p className="comment-text">{comment.text}</p>
-                            <span className="comment-meta">Idea: {comment.idea}</span>
-                        </div>
-                    ))}
+                    {recentComments.length === 0 ? (
+                        <p className="no-comments-sidebar">No comments yet</p>
+                    ) : (
+                        recentComments.map((comment) => (
+                            <div key={comment.id} className="comment-preview">
+                                <span className="comment-date">
+                                    {format(new Date(comment.createdAt), 'd MMMM yyyy, HH:mm')}
+                                </span>
+                                <p className="comment-text">{comment.text}</p>
+                                <span className="comment-meta">Idea: {comment.ideaTitle}</span>
+                            </div>
+                        ))
+                    )}
                 </div>
             </div>
         </div>

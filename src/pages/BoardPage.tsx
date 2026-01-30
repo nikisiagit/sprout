@@ -130,7 +130,7 @@ export function BoardPage() {
                 </div>
 
                 <aside>
-                    <Sidebar activeFilter={activeFilter} onFilterChange={setActiveFilter} />
+                    <Sidebar activeFilter={activeFilter} onFilterChange={setActiveFilter} ideas={ideas} />
                 </aside>
             </main>
 

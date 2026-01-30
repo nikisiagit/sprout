@@ -10,6 +10,7 @@ export interface Comment {
   id: string;
   text: string;
   createdAt: string;
+  idea_id?: string; // For Supabase mapping
 }
 
 export interface Idea {
@@ -20,4 +21,5 @@ export interface Idea {
   voteCount: number;
   comments: Comment[];
   createdAt: string;
+  space_slug?: string; // For partitioning by space
 }
