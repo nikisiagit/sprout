@@ -1,46 +1,38 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import logo from '../assets/sprout-wordmark.png';
-import { fireConfetti } from '../lib/confetti';
 
-export function SignUpPage() {
+export function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleSignUp = async (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
         setIsSubmitting(true);
 
-        const pendingSpace = localStorage.getItem('pendingSpace');
-
-        if (!pendingSpace) {
-            setError('No pending space found. Please start over.');
-            setIsSubmitting(false);
-            return;
-        }
-
-        const { name: spaceName, slug: spaceSlug } = JSON.parse(pendingSpace);
-
         try {
-            const response = await fetch('/api/auth/signup', {
+            const response = await fetch('/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password, spaceName, spaceSlug })
+                body: JSON.stringify({ email, password })
             });
 
+            const data = await response.json() as any;
+
             if (!response.ok) {
-                const data = await response.json() as any;
-                throw new Error(data.error || 'Failed to sign up');
+                throw new Error(data.error || 'Failed to log in');
             }
 
-            // Success
-            fireConfetti();
-            localStorage.removeItem('pendingSpace');
-            navigate(`/space/${spaceSlug}`);
+            // If user has spaces, redirect to first space
+            if (data.spaces && data.spaces.length > 0) {
+                navigate(`/space/${data.spaces[0].slug}`);
+            } else {
+                navigate('/');
+            }
 
         } catch (err: any) {
             setError(err.message);
@@ -58,9 +50,9 @@ export function SignUpPage() {
                     </div>
                 </div>
 
-                <form onSubmit={handleSignUp} className="create-space-form">
-                    <h2>Almost there!</h2>
-                    <p className="form-helper">Create an account to manage your space.</p>
+                <form onSubmit={handleLogin} className="create-space-form">
+                    <h2>Welcome Back</h2>
+                    <p className="form-helper">Log in to manage your spaces</p>
 
                     <div className="input-group">
                         <input
@@ -81,7 +73,7 @@ export function SignUpPage() {
                         />
                         {error && <p className="error-message">{error}</p>}
                         <button type="submit" className="create-btn" disabled={isSubmitting}>
-                            {isSubmitting ? 'Creating Space...' : 'Sign Up & Launch'}
+                            {isSubmitting ? 'Logging in...' : 'Log In'}
                         </button>
                     </div>
                 </form>

@@ -93,3 +93,14 @@
 .create-btn:hover {
     background-color: var(--accent-hover);
 }
+
+.create-btn:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.error-message {
+    color: #ef4444;
+    font-size: 14px;
+    text-align: center;
+}
