@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Search } from 'lucide-react';
+import { Search, Share2, ClipboardCheck } from 'lucide-react';
 import logo from '../assets/sprout-wordmark.png';
 import { Sidebar } from '../components/Sidebar';
 import { IdeaCard } from '../components/IdeaCard';
 import { Modal } from '../components/Modal';
 import { IdeaDetailModal } from '../components/IdeaDetailModal';
-import type { Idea, Comment } from '../types';
+import type { Idea, Comment, Status } from '../types';
 
 export function BoardPage() {
     const { slug } = useParams<{ slug: string }>();
@@ -21,6 +21,9 @@ export function BoardPage() {
     const [newTitle, setNewTitle] = useState('');
     const [newDesc, setNewDesc] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    // Share button state
+    const [isCopied, setIsCopied] = useState(false);
 
     const [ideas, setIdeas] = useState<Idea[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -97,6 +100,37 @@ export function BoardPage() {
         }
     };
 
+    const handleShare = () => {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            setIsCopied(true);
+            setTimeout(() => setIsCopied(false), 2000);
+        });
+    };
+
+    const handleStatusChange = async (ideaId: string, newStatus: Status) => {
+        // Optimistic Update
+        const updateIdea = (idea: Idea) => ({ ...idea, status: newStatus });
+        setIdeas(prev => prev.map(idea => idea.id === ideaId ? updateIdea(idea) : idea));
+        if (selectedIdea && selectedIdea.id === ideaId) {
+            setSelectedIdea(prev => prev ? updateIdea(prev) : null);
+        }
+
+        try {
+            const response = await fetch(`/api/ideas/${ideaId}/status`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: newStatus })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to update status');
+            }
+        } catch (error) {
+            console.error('Failed to update status', error);
+            // Revert on error could be added here
+        }
+    };
+
     const handleAddComment = async (ideaId: string, text: string) => {
         try {
             const response = await fetch(`/api/ideas/${ideaId}/comments`, {
@@ -145,7 +179,13 @@ export function BoardPage() {
                         </h1>
                         <p className="header-subtitle">Community tool for product improvements</p>
                     </div>
-                    <button className="btn-primary" onClick={() => setIsModalOpen(true)}>Suggest idea</button>
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                        <button className="btn-secondary" onClick={handleShare} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            {isCopied ? <ClipboardCheck size={16} /> : <Share2 size={16} />}
+                            {isCopied ? 'Copied Link' : 'Share'}
+                        </button>
+                        <button className="btn-primary" onClick={() => setIsModalOpen(true)}>Suggest idea</button>
+                    </div>
                 </div>
 
                 <div className="search-container">
@@ -230,6 +270,7 @@ export function BoardPage() {
                 isOpen={!!selectedIdea}
                 onClose={() => setSelectedIdea(null)}
                 onAddComment={handleAddComment}
+                onStatusChange={handleStatusChange}
             />
         </div>
     );

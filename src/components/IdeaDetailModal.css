@@ -19,13 +19,30 @@
 }
 
 .vote-badge {
-    background-color: rgba(59, 130, 246, 0.1);
+    background-color: rgba(10, 50, 40, 0.1);
+    /* Green tint */
     color: var(--accent-primary);
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 13px;
     font-weight: 500;
     white-space: nowrap;
+}
+
+.status-control {
+    margin-right: auto;
+    margin-left: 16px;
+}
+
+.status-select {
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 4px 8px;
+    font-size: 13px;
+    outline: none;
+    cursor: pointer;
 }
 
 .detail-description {

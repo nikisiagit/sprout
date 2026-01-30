@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Send } from 'lucide-react';
 import { Modal } from './Modal';
-import type { Idea } from '../types';
+import type { Idea, Status } from '../types';
 import './IdeaDetailModal.css';
 
 interface IdeaDetailModalProps {
@@ -9,9 +9,10 @@ interface IdeaDetailModalProps {
     isOpen: boolean;
     onClose: () => void;
     onAddComment: (ideaId: string, text: string) => void;
+    onStatusChange: (ideaId: string, status: Status) => void;
 }
 
-export function IdeaDetailModal({ idea, isOpen, onClose, onAddComment }: IdeaDetailModalProps) {
+export function IdeaDetailModal({ idea, isOpen, onClose, onAddComment, onStatusChange }: IdeaDetailModalProps) {
     const [commentText, setCommentText] = useState('');
 
     if (!idea) return null;
@@ -24,11 +25,31 @@ export function IdeaDetailModal({ idea, isOpen, onClose, onAddComment }: IdeaDet
         setCommentText('');
     };
 
+    const statuses: Array<{ value: Status, label: string }> = [
+        { value: 'new', label: 'New Idea' },
+        { value: 'in-progress', label: 'In Progress' },
+        { value: 'rejected', label: 'Rejected' },
+        { value: 'done', label: 'Done' }
+    ];
+
     return (
         <Modal isOpen={isOpen} onClose={onClose} title="Idea Details">
             <div className="idea-detail">
                 <div className="detail-header">
                     <h3>{idea.title}</h3>
+
+                    <div className="status-control">
+                        <select
+                            value={idea.status}
+                            onChange={(e) => onStatusChange(idea.id, e.target.value as Status)}
+                            className="status-select"
+                        >
+                            {statuses.map(s => (
+                                <option key={s.value} value={s.value}>{s.label}</option>
+                            ))}
+                        </select>
+                    </div>
+
                     <div className="vote-badge">
                         <span className="count">{idea.voteCount}</span> votes
                     </div>
