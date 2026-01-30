@@ -9,7 +9,6 @@ export interface User {
 export interface Comment {
   id: string;
   text: string;
-  author: User;
   createdAt: string;
 }
 
@@ -19,7 +18,6 @@ export interface Idea {
   description: string;
   status: Status;
   voteCount: number;
-  commentCount: number;
-  author: User;
+  comments: Comment[];
   createdAt: string;
 }
