@@ -12,7 +12,11 @@ export function LandingPage() {
 
         // Create a URL-friendly slug
         const slug = productName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-        navigate(`/space/${slug}`);
+
+        // Store pending space info
+        localStorage.setItem('pendingSpace', JSON.stringify({ name: productName, slug }));
+
+        navigate('/signup');
     };
 
     return (

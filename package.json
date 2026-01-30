@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "canvas-confetti": "^1.9.4",
     "date-fns": "^4.1.0",
     "lucide-react": "^0.563.0",
     "react": "^19.2.0",
@@ -19,6 +20,7 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260130.0",
     "@eslint/js": "^9.39.1",
+    "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",

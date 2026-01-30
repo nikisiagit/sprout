@@ -13,9 +13,9 @@ interface IdeaDetailModalProps {
     onSyncJira: (ideaId: string) => void;
 }
 
-export function IdeaDetailModal({ idea, isOpen, onClose, onAddComment, onStatusChange, onSyncJira }: IdeaDetailModalProps) {
+export function IdeaDetailModal({ idea, isOpen, onClose, onAddComment, onStatusChange }: IdeaDetailModalProps) {
     const [commentText, setCommentText] = useState('');
-    const [isSyncing, setIsSyncing] = useState(false);
+    // const [isSyncing, setIsSyncing] = useState(false);
 
     if (!idea) return null;
 
@@ -27,11 +27,13 @@ export function IdeaDetailModal({ idea, isOpen, onClose, onAddComment, onStatusC
         setCommentText('');
     };
 
+    /*
     const handleSyncClick = async () => {
         setIsSyncing(true);
         await onSyncJira(idea.id);
         setIsSyncing(false);
     }
+    */
 
     const statuses: Array<{ value: Status, label: string }> = [
         { value: 'new', label: 'New Idea' },
@@ -59,19 +61,22 @@ export function IdeaDetailModal({ idea, isOpen, onClose, onAddComment, onStatusC
                             </select>
                         </div>
 
+                        {/* Jira Sync Locked for now */}
+                        {/*
                         {idea.jiraIssueKey ? (
-                            <div className="jira-badge">
+                             <div className="jira-badge">
                                 <span>Jira: {idea.jiraIssueKey}</span>
                             </div>
                         ) : (
-                            <button
-                                onClick={handleSyncClick}
+                            <button 
+                                onClick={handleSyncClick} 
                                 disabled={isSyncing}
                                 className="jira-sync-btn"
                             >
                                 {isSyncing ? 'Syncing...' : 'Sync to Jira'}
                             </button>
                         )}
+                        */}
                     </div>
 
                     <div className="vote-badge">
