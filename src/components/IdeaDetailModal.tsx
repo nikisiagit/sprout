@@ -10,10 +10,12 @@ interface IdeaDetailModalProps {
     onClose: () => void;
     onAddComment: (ideaId: string, text: string) => void;
     onStatusChange: (ideaId: string, status: Status) => void;
+    onSyncJira: (ideaId: string) => void;
 }
 
-export function IdeaDetailModal({ idea, isOpen, onClose, onAddComment, onStatusChange }: IdeaDetailModalProps) {
+export function IdeaDetailModal({ idea, isOpen, onClose, onAddComment, onStatusChange, onSyncJira }: IdeaDetailModalProps) {
     const [commentText, setCommentText] = useState('');
+    const [isSyncing, setIsSyncing] = useState(false);
 
     if (!idea) return null;
 
@@ -24,6 +26,12 @@ export function IdeaDetailModal({ idea, isOpen, onClose, onAddComment, onStatusC
         onAddComment(idea.id, commentText);
         setCommentText('');
     };
+
+    const handleSyncClick = async () => {
+        setIsSyncing(true);
+        await onSyncJira(idea.id);
+        setIsSyncing(false);
+    }
 
     const statuses: Array<{ value: Status, label: string }> = [
         { value: 'new', label: 'New Idea' },
@@ -38,16 +46,32 @@ export function IdeaDetailModal({ idea, isOpen, onClose, onAddComment, onStatusC
                 <div className="detail-header">
                     <h3>{idea.title}</h3>
 
-                    <div className="status-control">
-                        <select
-                            value={idea.status}
-                            onChange={(e) => onStatusChange(idea.id, e.target.value as Status)}
-                            className="status-select"
-                        >
-                            {statuses.map(s => (
-                                <option key={s.value} value={s.value}>{s.label}</option>
-                            ))}
-                        </select>
+                    <div className="header-actions">
+                        <div className="status-control">
+                            <select
+                                value={idea.status}
+                                onChange={(e) => onStatusChange(idea.id, e.target.value as Status)}
+                                className="status-select"
+                            >
+                                {statuses.map(s => (
+                                    <option key={s.value} value={s.value}>{s.label}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        {idea.jiraIssueKey ? (
+                            <div className="jira-badge">
+                                <span>Jira: {idea.jiraIssueKey}</span>
+                            </div>
+                        ) : (
+                            <button
+                                onClick={handleSyncClick}
+                                disabled={isSyncing}
+                                className="jira-sync-btn"
+                            >
+                                {isSyncing ? 'Syncing...' : 'Sync to Jira'}
+                            </button>
+                        )}
                     </div>
 
                     <div className="vote-badge">

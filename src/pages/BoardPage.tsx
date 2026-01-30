@@ -131,6 +131,27 @@ export function BoardPage() {
         }
     };
 
+    const handleSyncJira = async (ideaId: string) => {
+        try {
+            const response = await fetch(`/api/ideas/${ideaId}/jira`, { method: 'POST' });
+            if (response.ok) {
+                const data = await response.json() as any;
+                // Update local state with issueKey
+                const updateIdea = (idea: Idea) => ({ ...idea, jiraIssueKey: data.issueKey });
+                setIdeas(prev => prev.map(i => i.id === ideaId ? updateIdea(i) : i));
+                if (selectedIdea && selectedIdea.id === ideaId) {
+                    setSelectedIdea(prev => prev ? updateIdea(prev) : null);
+                }
+                alert(`Successfully synced to Jira! Issue Key: ${data.issueKey}`);
+            } else {
+                alert('Failed to sync to Jira. Please check if your Jira credentials are set in Cloudflare dashboard.');
+            }
+        } catch (error) {
+            console.error('Error syncing to Jira', error);
+            alert('Error syncing to Jira');
+        }
+    };
+
     const handleAddComment = async (ideaId: string, text: string) => {
         try {
             const response = await fetch(`/api/ideas/${ideaId}/comments`, {
@@ -269,6 +290,7 @@ export function BoardPage() {
                 onClose={() => setSelectedIdea(null)}
                 onAddComment={handleAddComment}
                 onStatusChange={handleStatusChange}
+                onSyncJira={handleSyncJira}
             />
         </div>
     );

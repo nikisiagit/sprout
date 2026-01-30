@@ -9,7 +9,8 @@ CREATE TABLE ideas (
   status TEXT NOT NULL DEFAULT 'new',
   vote_count INTEGER DEFAULT 0,
   created_at INTEGER NOT NULL,
-  space_slug TEXT NOT NULL
+  space_slug TEXT NOT NULL,
+  jira_issue_key TEXT
 );
 
 CREATE TABLE comments (

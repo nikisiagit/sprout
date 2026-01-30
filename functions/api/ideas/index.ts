@@ -31,6 +31,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
         description: idea.description,
         status: idea.status,
         voteCount: idea.vote_count,
+        jiraIssueKey: idea.jira_issue_key,
         createdAt: new Date(idea.created_at).toISOString(),
         comments: [] // populated below or separately
     }));

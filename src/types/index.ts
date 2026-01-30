@@ -21,5 +21,6 @@ export interface Idea {
   voteCount: number;
   comments: Comment[];
   createdAt: string;
-  space_slug?: string; // For partitioning by space
+  space_slug?: string;
+  jiraIssueKey?: string;
 }

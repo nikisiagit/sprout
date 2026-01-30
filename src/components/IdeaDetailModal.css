@@ -29,9 +29,47 @@
     white-space: nowrap;
 }
 
-.status-control {
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     margin-right: auto;
     margin-left: 16px;
+}
+
+.status-control {
+    margin: 0;
+}
+
+.jira-sync-btn {
+    background-color: #0052cc;
+    /* Jira Blue */
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.jira-sync-btn:hover {
+    background-color: #0047b3;
+}
+
+.jira-sync-btn:disabled {
+    background-color: #aeb9cc;
+    cursor: wait;
+}
+
+.jira-badge {
+    background-color: #deebff;
+    color: #0052cc;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 600;
 }
 
 .status-select {
