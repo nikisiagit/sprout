@@ -4,6 +4,7 @@ interface Env {
     JIRA_EMAIL: string;
     JIRA_API_TOKEN: string;
     JIRA_PROJECT_KEY: string;
+    JIRA_ISSUE_TYPE?: string;
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
@@ -63,7 +64,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
                 ]
             },
             issuetype: {
-                name: "Task" // Assumption, might need to be configurable
+                name: env.JIRA_ISSUE_TYPE || "Task" // Use "Idea" for Jira Product Discovery
             }
         }
     };
