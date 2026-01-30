@@ -1,23 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg-app: #18181b;
-  --bg-card: #27272a;
-  --bg-input: #3f3f46;
-  --bg-hover: #3f3f46;
-  
-  --text-primary: #f4f4f5;
-  --text-secondary: #a1a1aa;
-  
-  --accent-primary: #3b82f6; /* Blue */
-  --accent-hover: #2563eb;
-  
-  --border-color: #3f3f46;
-  
+  --bg-app: #C9EAC2;
+  /* Light Sage Green */
+  --bg-card: #eaf7e6;
+  /* Lighter Green for cards */
+  --bg-input: #b4dcb1;
+  --bg-hover: #b4dcb1;
+
+  --text-primary: #0A3228;
+  /* Dark Forest Green */
+  --text-secondary: #305850;
+
+  --accent-primary: #0A3228;
+  /* Same as text for strong branding */
+  --accent-hover: #134e3f;
+
+  --border-color: #9ECBA8;
+
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
-  
+
   --font-sans: 'Inter', sans-serif;
 }
 
@@ -35,7 +39,12 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
 }
 
@@ -50,7 +59,8 @@ button {
   background: none;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
   padding: 0;
   margin: 0;

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import logo from '../assets/sprout-logo.png';
+import logo from '../assets/sprout-branding.jpg';
 
 export function LandingPage() {
     const [productName, setProductName] = useState('');

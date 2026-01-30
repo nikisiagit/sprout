@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Search } from 'lucide-react';
-import logo from '../assets/sprout-logo.png';
+import logo from '../assets/sprout-branding.jpg';
 import { Sidebar } from '../components/Sidebar';
 import { IdeaCard } from '../components/IdeaCard';
 import { Modal } from '../components/Modal';
