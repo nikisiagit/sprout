@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import logo from '../assets/sprout-branding.jpg';
+import logo from '../assets/sprout-wordmark.png';
 
 export function LandingPage() {
     const [productName, setProductName] = useState('');
@@ -20,9 +20,9 @@ export function LandingPage() {
             <div className="landing-content">
                 <div className="logo-section">
                     <div className="logo-icon">
-                        <img src={logo} alt="Sprout Logo" style={{ width: '120px', height: 'auto' }} />
+                        <img src={logo} alt="Sprout" style={{ width: '200px', height: 'auto' }} />
                     </div>
-                    <h1>Sprout</h1>
+                    {/* Text removed as it is in the logo now */}
                     <p>Community tool for product improvements</p>
                 </div>
 

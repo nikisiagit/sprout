@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Search } from 'lucide-react';
-import logo from '../assets/sprout-branding.jpg';
+import logo from '../assets/sprout-wordmark.png';
 import { Sidebar } from '../components/Sidebar';
 import { IdeaCard } from '../components/IdeaCard';
 import { Modal } from '../components/Modal';
@@ -139,7 +139,7 @@ export function BoardPage() {
                     <div className="header-title">
                         <h1>
                             <div className="header-icon" style={{ background: 'transparent' }}>
-                                <img src={logo} alt="Sprout Logo" style={{ width: '40px', height: 'auto' }} />
+                                <img src={logo} alt="Sprout" style={{ width: '100px', height: 'auto' }} />
                             </div>
                             {productName}
                         </h1>
