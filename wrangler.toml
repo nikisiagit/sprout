@@ -1,0 +1,8 @@
+name = "sprout"
+compatibility_date = "2025-01-29"
+pages_build_output_dir = "dist"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "sprout-db"
+database_id = "Put your D1 Database ID here"
