@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { Sprout } from 'lucide-react';
+import logo from '../assets/sprout-logo.png';
 
 export function LandingPage() {
     const [productName, setProductName] = useState('');
@@ -20,7 +20,7 @@ export function LandingPage() {
             <div className="landing-content">
                 <div className="logo-section">
                     <div className="logo-icon">
-                        <Sprout size={48} color="#3b82f6" />
+                        <img src={logo} alt="Sprout Logo" style={{ width: '120px', height: 'auto' }} />
                     </div>
                     <h1>Sprout</h1>
                     <p>Community tool for product improvements</p>
