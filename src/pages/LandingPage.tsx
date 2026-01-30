@@ -55,7 +55,7 @@ export function LandingPage() {
         } else {
             // User not logged in - store space info and redirect to auth
             localStorage.setItem('pendingSpace', JSON.stringify({ name: productName, slug }));
-            navigate('/auth');
+            navigate('/signup');
         }
     };
 

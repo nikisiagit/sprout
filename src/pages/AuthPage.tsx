@@ -1,15 +1,20 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
 import logo from '../assets/sprout-wordmark.png';
 import { fireConfetti } from '../lib/confetti';
 
-export function AuthPage() {
-    const [mode, setMode] = useState<'signup' | 'login'>('signup');
+interface AuthPageProps {
+    initialMode?: 'signup' | 'login';
+}
+
+export function AuthPage({ initialMode = 'signup' }: AuthPageProps) {
+    const [mode, setMode] = useState<'signup' | 'login'>(initialMode);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
 
     const pendingSpace = localStorage.getItem('pendingSpace');
     const spaceInfo = pendingSpace ? JSON.parse(pendingSpace) : null;
@@ -57,11 +62,18 @@ export function AuthPage() {
                     navigate(`/space/${spaceInfo.slug}`);
                 } else {
                     const errData = await createRes.json() as any;
+                    // If space already exists or failed, just go to profile or the existing space?
+                    // For now, let's treat it as an error to show the user
                     throw new Error(errData.error || 'Failed to create space');
                 }
             } else {
-                // No pending space - go to profile
-                navigate('/profile');
+                // No pending space
+                const redirectTo = searchParams.get('redirect');
+                if (redirectTo) {
+                    navigate(redirectTo);
+                } else {
+                    navigate('/profile');
+                }
             }
 
         } catch (err: any) {

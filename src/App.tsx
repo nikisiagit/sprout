@@ -1,8 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { LandingPage } from './pages/LandingPage';
 import { BoardPage } from './pages/BoardPage';
-import { SignUpPage } from './pages/SignUpPage';
-import { LoginPage } from './pages/LoginPage';
 import { AuthPage } from './pages/AuthPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { ChangelogPage } from './pages/ChangelogPage';
@@ -16,9 +14,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/signup" element={<AuthPage initialMode="signup" />} />
+        <Route path="/login" element={<AuthPage initialMode="login" />} />
+        <Route path="/auth" element={<AuthPage initialMode="signup" />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/space/:slug" element={<BoardPage />} />
         <Route path="/changelog" element={<ChangelogPage />} />
