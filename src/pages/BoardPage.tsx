@@ -172,10 +172,8 @@ export function BoardPage() {
                 <div className="header-top">
                     <div className="header-title">
                         <h1>
-                            <div className="header-icon" style={{ background: 'transparent' }}>
-                                <img src={logo} alt="Sprout" style={{ width: '100px', height: 'auto' }} />
-                            </div>
-                            {productName}
+                            <img src={logo} alt="Sprout" style={{ width: '100px', height: 'auto' }} />
+                            <span>{productName}</span>
                         </h1>
                         <p className="header-subtitle">Community tool for product improvements</p>
                     </div>
