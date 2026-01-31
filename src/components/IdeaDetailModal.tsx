@@ -10,10 +10,10 @@ interface IdeaDetailModalProps {
     onClose: () => void;
     onAddComment: (ideaId: string, text: string) => void;
     onStatusChange: (ideaId: string, status: Status) => void;
-    onSyncJira: (ideaId: string) => void;
+    isOwner?: boolean;
 }
 
-export function IdeaDetailModal({ idea, isOpen, onClose, onAddComment, onStatusChange }: IdeaDetailModalProps) {
+export function IdeaDetailModal({ idea, isOpen, onClose, onAddComment, onStatusChange, isOwner = false }: IdeaDetailModalProps) {
     const [commentText, setCommentText] = useState('');
     // const [isSyncing, setIsSyncing] = useState(false);
 
@@ -42,6 +42,8 @@ export function IdeaDetailModal({ idea, isOpen, onClose, onAddComment, onStatusC
         { value: 'done', label: 'Done' }
     ];
 
+    const currentStatusLabel = statuses.find(s => s.value === idea.status)?.label || idea.status;
+
     return (
         <Modal isOpen={isOpen} onClose={onClose} title="Idea Details">
             <div className="idea-detail">
@@ -50,15 +52,21 @@ export function IdeaDetailModal({ idea, isOpen, onClose, onAddComment, onStatusC
 
                     <div className="header-actions">
                         <div className="status-control">
-                            <select
-                                value={idea.status}
-                                onChange={(e) => onStatusChange(idea.id, e.target.value as Status)}
-                                className="status-select"
-                            >
-                                {statuses.map(s => (
-                                    <option key={s.value} value={s.value}>{s.label}</option>
-                                ))}
-                            </select>
+                            {isOwner ? (
+                                <select
+                                    value={idea.status}
+                                    onChange={(e) => onStatusChange(idea.id, e.target.value as Status)}
+                                    className="status-select"
+                                >
+                                    {statuses.map(s => (
+                                        <option key={s.value} value={s.value}>{s.label}</option>
+                                    ))}
+                                </select>
+                            ) : (
+                                <div className={`status-badge status-${idea.status}`}>
+                                    {currentStatusLabel}
+                                </div>
+                            )}
                         </div>
 
                         {/* Jira Sync Locked for now */}

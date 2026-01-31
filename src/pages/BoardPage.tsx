@@ -156,6 +156,7 @@ export function BoardPage() {
         }
     };
 
+    /*
     const handleSyncJira = async (ideaId: string) => {
         try {
             const response = await fetch(`/api/ideas/${ideaId}/jira`, { method: 'POST' });
@@ -176,6 +177,7 @@ export function BoardPage() {
             alert('Error syncing to Jira');
         }
     };
+    */
 
     const handleAddComment = async (ideaId: string, text: string) => {
         try {
@@ -332,7 +334,7 @@ export function BoardPage() {
                 onClose={() => setSelectedIdea(null)}
                 onAddComment={handleAddComment}
                 onStatusChange={handleStatusChange}
-                onSyncJira={handleSyncJira}
+                isOwner={isOwner}
             />
         </div>
     );
