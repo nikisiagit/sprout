@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Search, Share2, ClipboardCheck, LogIn, LogOut } from 'lucide-react';
-import logo from '../assets/sprout-wordmark.png';
+import { Share2, LogIn, LogOut } from 'lucide-react';
 import { Sidebar } from '../components/Sidebar';
 import { IdeaCard } from '../components/IdeaCard';
 import { Modal } from '../components/Modal';
@@ -215,77 +214,93 @@ export function BoardPage() {
     );
 
     return (
-        <div className="app-container">
-            <header className="app-header">
-                <div className="header-top">
-                    <div className="header-title">
-                        <h1>
-                            <img src={logo} alt="Sprout" style={{ width: '100px', height: 'auto' }} />
-                            <span>{productName}</span>
-                        </h1>
-                        <p className="header-subtitle">Community tool for product improvements</p>
+        <div className="govuk-width-container">
+            <header className="govuk-header" role="banner" data-module="govuk-header" style={{ marginBottom: '30px' }}>
+                <div className="govuk-header__container govuk-width-container">
+                    <div className="govuk-header__logo">
+                        <Link to="/profile" className="govuk-header__link govuk-header__link--homepage">
+                            <span className="govuk-header__logotype">
+                                <span className="govuk-header__logotype-text">
+                                    Sprout
+                                </span>
+                            </span>
+                        </Link>
                     </div>
-                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                    <div className="govuk-header__content">
                         {isOwner ? (
                             <button
-                                className="btn-secondary"
                                 onClick={handleLogout}
-                                style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+                                className="govuk-button govuk-button--secondary govuk-!-margin-bottom-0"
                             >
-                                <LogOut size={16} /> Logout
+                                <LogOut size={16} style={{ marginRight: '5px' }} /> Logout
                             </button>
                         ) : (
                             <Link
                                 to={`/login?redirect=/space/${slug}`}
-                                className="btn-secondary"
-                                style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}
+                                className="govuk-button govuk-button--secondary govuk-!-margin-bottom-0"
                             >
-                                <LogIn size={16} /> Owner Login
+                                <LogIn size={16} style={{ marginRight: '5px' }} /> Owner Login
                             </Link>
                         )}
-                        <button className="btn-secondary" onClick={handleShare} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            {isCopied ? <ClipboardCheck size={16} /> : <Share2 size={16} />}
-                            {isCopied ? 'Copied Link' : 'Share'}
-                        </button>
-                        <button className="btn-primary" onClick={() => setIsModalOpen(true)}>Suggest idea</button>
                     </div>
-                </div>
-
-                <div className="search-container">
-                    <input
-                        type="text"
-                        className="search-input"
-                        placeholder="Search ideas"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                    <Search className="search-icon" size={20} />
                 </div>
             </header>
 
-            <main className="main-layout">
-                <div className="ideas-list">
-                    {isLoading ? (
-                        <div className="loading-state">Loading ideas...</div>
-                    ) : filteredIdeas.length === 0 ? (
-                        <div className="empty-state">
-                            <p>No ideas yet. Be the first to suggest one!</p>
-                        </div>
-                    ) : (
-                        filteredIdeas.map(idea => (
-                            <IdeaCard
-                                key={idea.id}
-                                idea={idea}
-                                onVote={handleVote}
-                                onClick={(idea) => setSelectedIdea(idea)}
-                            />
-                        ))
-                    )}
+            <main className="govuk-main-wrapper" id="main-content" role="main">
+                <div className="govuk-grid-row">
+                    <div className="govuk-grid-column-full">
+                        <span className="govuk-caption-xl">Space</span>
+                        <h1 className="govuk-heading-xl">
+                            {productName}
+                        </h1>
+                        <p className="govuk-body-l">Community tool for product improvements</p>
+                    </div>
                 </div>
 
-                <aside>
-                    <Sidebar activeFilter={activeFilter} onFilterChange={setActiveFilter} ideas={ideas} />
-                </aside>
+                <div className="govuk-grid-row">
+                    <div className="govuk-grid-column-two-thirds">
+                        <div className="govuk-flex-row" style={{ display: 'flex', gap: '10px', marginBottom: '20px', alignItems: 'center' }}>
+                            <div className="govuk-form-group" style={{ marginBottom: 0, flexGrow: 1 }}>
+                                <input
+                                    type="text"
+                                    className="govuk-input"
+                                    placeholder="Search ideas"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
+                            </div>
+                            <button className="govuk-button govuk-!-margin-bottom-0" onClick={() => setIsModalOpen(true)}>
+                                Suggest idea
+                            </button>
+                            <button className="govuk-button govuk-button--secondary govuk-!-margin-bottom-0" onClick={handleShare}>
+                                {isCopied ? 'Copied' : <Share2 size={16} />}
+                            </button>
+                        </div>
+
+                        <div className="ideas-list">
+                            {isLoading ? (
+                                <div className="govuk-body">Loading ideas...</div>
+                            ) : filteredIdeas.length === 0 ? (
+                                <div className="govuk-inset-text">
+                                    <p className="govuk-body">No ideas yet. Be the first to suggest one!</p>
+                                </div>
+                            ) : (
+                                filteredIdeas.map(idea => (
+                                    <IdeaCard
+                                        key={idea.id}
+                                        idea={idea}
+                                        onVote={handleVote}
+                                        onClick={(idea) => setSelectedIdea(idea)}
+                                    />
+                                ))
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="govuk-grid-column-one-third">
+                        <Sidebar activeFilter={activeFilter} onFilterChange={setActiveFilter} ideas={ideas} />
+                    </div>
+                </div>
             </main>
 
             <Modal
@@ -293,13 +308,15 @@ export function BoardPage() {
                 onClose={() => setIsModalOpen(false)}
                 title="Suggest a new idea"
             >
-                <form onSubmit={handleSubmit} className="idea-form">
-                    <div className="form-group">
-                        <label htmlFor="title">Title</label>
+                <form onSubmit={handleSubmit}>
+                    <div className="govuk-form-group">
+                        <label className="govuk-label" htmlFor="title">
+                            Title
+                        </label>
                         <input
                             id="title"
                             type="text"
-                            className="form-input"
+                            className="govuk-input"
                             placeholder="What's your idea?"
                             value={newTitle}
                             onChange={e => setNewTitle(e.target.value)}
@@ -307,11 +324,13 @@ export function BoardPage() {
                         />
                     </div>
 
-                    <div className="form-group">
-                        <label htmlFor="description">Description</label>
+                    <div className="govuk-form-group">
+                        <label className="govuk-label" htmlFor="description">
+                            Description
+                        </label>
                         <textarea
                             id="description"
-                            className="form-textarea"
+                            className="govuk-textarea"
                             placeholder="Describe your idea in detail..."
                             rows={4}
                             value={newDesc}
@@ -319,10 +338,12 @@ export function BoardPage() {
                         />
                     </div>
 
-                    <div className="form-actions">
-                        <button type="button" className="btn-secondary" onClick={() => setIsModalOpen(false)}>Cancel</button>
-                        <button type="submit" className="btn-primary" disabled={isSubmitting}>
+                    <div className="govuk-button-group">
+                        <button type="submit" className="govuk-button" disabled={isSubmitting}>
                             {isSubmitting ? 'Submitting...' : 'Submit Idea'}
+                        </button>
+                        <button type="button" className="govuk-button govuk-button--secondary" onClick={() => setIsModalOpen(false)}>
+                            Cancel
                         </button>
                     </div>
                 </form>

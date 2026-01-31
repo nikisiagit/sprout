@@ -1,7 +1,6 @@
-import { Lightbulb, Loader2, Ban, CheckCircle, List, ChevronDown } from 'lucide-react';
+import { Lightbulb, Loader2, Ban, CheckCircle, List } from 'lucide-react';
 import type { Idea } from '../types';
 import { format } from 'date-fns';
-import './Sidebar.css';
 
 interface SidebarProps {
     activeFilter: string;
@@ -40,43 +39,48 @@ export function Sidebar({ activeFilter, onFilterChange, ideas }: SidebarProps) {
         .slice(0, 5);
 
     return (
-        <div className="sidebar-container">
-            <div className="sort-dropdown">
-                <span>New first</span>
-                <ChevronDown size={16} />
-            </div>
-
+        <div className="sidebar-container" style={{ paddingTop: '20px' }}>
             <div className="sidebar">
-                <div className="filters-section">
-                    <div className="filter-list">
+                <div className="filters-section" style={{ marginBottom: '30px' }}>
+                    <h2 className="govuk-heading-s">Filters</h2>
+                    <ul className="govuk-list govuk-list--spaced">
                         {filters.map((filter) => (
-                            <div
-                                key={filter.id}
-                                className={`filter-item ${activeFilter === filter.id ? 'active' : ''}`}
-                                onClick={() => onFilterChange(filter.id)}
-                            >
-                                <div className="filter-icon-wrapper">
-                                    <filter.icon size={18} />
-                                    <span>{filter.label}</span>
-                                </div>
-                                <span className="filter-count">{filter.count}</span>
-                            </div>
+                            <li key={filter.id}>
+                                <a
+                                    href="#"
+                                    onClick={(e) => { e.preventDefault(); onFilterChange(filter.id); }}
+                                    className={`govuk-link ${activeFilter === filter.id ? 'govuk-!-font-weight-bold' : 'govuk-link--no-visited-state'}`}
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        color: activeFilter === filter.id ? '#1d70b8' : undefined,
+                                        textDecoration: 'none'
+                                    }}
+                                >
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <filter.icon size={16} />
+                                        <span>{filter.label}</span>
+                                    </div>
+                                    <span className="govuk-tag govuk-tag--grey" style={{ marginLeft: '10px' }}>{filter.count}</span>
+                                </a>
+                            </li>
                         ))}
-                    </div>
+                    </ul>
                 </div>
 
-                <div className="comments-section">
-                    <h3>New comments</h3>
+                <div className="comments-section" style={{ borderTop: '2px solid #1d70b8', paddingTop: '20px' }}>
+                    <h3 className="govuk-heading-s">Activity</h3>
                     {recentComments.length === 0 ? (
-                        <p className="no-comments-sidebar">No comments yet</p>
+                        <p className="govuk-body-s">No comments yet</p>
                     ) : (
                         recentComments.map((comment) => (
-                            <div key={comment.id} className="comment-preview">
-                                <span className="comment-date">
-                                    {format(new Date(comment.createdAt), 'd MMMM yyyy, HH:mm')}
-                                </span>
-                                <p className="comment-text">{comment.text}</p>
-                                <span className="comment-meta">Idea: {comment.ideaTitle}</span>
+                            <div key={comment.id} className="govuk-body-s" style={{ marginBottom: '15px', borderBottom: '1px solid #b1b4b6', paddingBottom: '10px' }}>
+                                <p className="govuk-!-margin-bottom-1" style={{ color: '#505a5f' }}>
+                                    {format(new Date(comment.createdAt), 'd MMM, HH:mm')}
+                                </p>
+                                <p className="govuk-!-margin-bottom-1">"{comment.text}"</p>
+                                <span style={{ fontSize: '12px', color: '#505a5f' }}>On: {comment.ideaTitle}</span>
                             </div>
                         ))
                     )}

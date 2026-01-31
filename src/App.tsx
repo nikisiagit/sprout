@@ -4,10 +4,7 @@ import { BoardPage } from './pages/BoardPage';
 import { AuthPage } from './pages/AuthPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { ChangelogPage } from './pages/ChangelogPage';
-import './App.css';
-import './pages/LandingPage.css';
-import './pages/BoardPage.css';
-import './pages/ProfilePage.css';
+
 
 function App() {
   return (

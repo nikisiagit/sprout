@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { Send } from 'lucide-react';
 import { Modal } from './Modal';
 import type { Idea, Status } from '../types';
-import './IdeaDetailModal.css';
 
 interface IdeaDetailModalProps {
     idea: Idea | null;
@@ -46,97 +44,81 @@ export function IdeaDetailModal({ idea, isOpen, onClose, onAddComment, onStatusC
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} title="Idea Details">
-            <div className="idea-detail">
-                <div className="detail-header">
-                    <h3>{idea.title}</h3>
+            <div className="govuk-grid-row">
+                <div className="govuk-grid-column-full">
+                    <h3 className="govuk-heading-l">{idea.title}</h3>
 
-                    <div className="header-actions">
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', borderBottom: '1px solid #b1b4b6', paddingBottom: '15px' }}>
                         <div className="status-control">
                             {isOwner ? (
-                                <select
-                                    value={idea.status}
-                                    onChange={(e) => onStatusChange(idea.id, e.target.value as Status)}
-                                    className="status-select"
-                                >
-                                    {statuses.map(s => (
-                                        <option key={s.value} value={s.value}>{s.label}</option>
-                                    ))}
-                                </select>
-                            ) : (
-                                <div className={`status-badge status-${idea.status}`}>
-                                    {currentStatusLabel}
+                                <div className="govuk-form-group" style={{ marginBottom: 0 }}>
+                                    <label className="govuk-label" htmlFor="status-select">Status</label>
+                                    <select
+                                        id="status-select"
+                                        value={idea.status}
+                                        onChange={(e) => onStatusChange(idea.id, e.target.value as Status)}
+                                        className="govuk-select"
+                                    >
+                                        {statuses.map(s => (
+                                            <option key={s.value} value={s.value}>{s.label}</option>
+                                        ))}
+                                    </select>
                                 </div>
+                            ) : (
+                                <strong className={`govuk-tag ${idea.status === 'new' ? 'govuk-tag--blue' : idea.status === 'done' ? 'govuk-tag--green' : 'govuk-tag--grey'}`}>
+                                    {currentStatusLabel}
+                                </strong>
                             )}
                         </div>
 
-                        {/* Jira Sync Locked for now */}
-                        {/*
-                        {idea.jiraIssueKey ? (
-                             <div className="jira-badge">
-                                <span>Jira: {idea.jiraIssueKey}</span>
-                            </div>
-                        ) : (
-                            <button 
-                                onClick={handleSyncClick} 
-                                disabled={isSyncing}
-                                className="jira-sync-btn"
-                            >
-                                {isSyncing ? 'Syncing...' : 'Sync to Jira'}
-                            </button>
-                        )}
-                        */}
+                        <div className="govuk-body" style={{ marginBottom: 0 }}>
+                            <strong>{idea.voteCount}</strong> votes
+                        </div>
                     </div>
 
-                    <div className="vote-badge">
-                        <span className="count">{idea.voteCount}</span> votes
-                    </div>
-                </div>
+                    <p className="govuk-body-l">{idea.description}</p>
 
-                <p className="detail-description">{idea.description}</p>
+                    <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible" />
 
-                <div className="detail-comments-section">
-                    <h4>Comments ({idea.comments.length})</h4>
+                    <h4 className="govuk-heading-m">Comments ({idea.comments.length})</h4>
 
-                    <div className="comments-list">
+                    <div className="comments-list" style={{ marginBottom: '30px' }}>
                         {idea.comments.length === 0 ? (
-                            <p className="no-comments">No comments yet. Be the first!</p>
+                            <p className="govuk-body">No comments yet. Be the first!</p>
                         ) : (
                             idea.comments.map(comment => (
-                                <div key={comment.id} className="comment-item">
-                                    <div className="comment-bubble">
-                                        <p>{comment.text}</p>
-                                        <span className="time">
-                                            {new Date(comment.createdAt).toLocaleDateString()}
-                                        </span>
-                                    </div>
+                                <div key={comment.id} style={{ marginBottom: '15px', padding: '15px', background: '#f3f2f1', borderLeft: '5px solid #1d70b8' }}>
+                                    <p className="govuk-body" style={{ marginBottom: '5px' }}>{comment.text}</p>
+                                    <span className="govuk-body-s" style={{ color: '#505a5f' }}>
+                                        {new Date(comment.createdAt).toLocaleDateString()}
+                                    </span>
                                 </div>
                             ))
                         )}
                     </div>
 
                     {idea.status === 'new' ? (
-                        <form onSubmit={handleSubmit} className="comment-form">
-                            <input
-                                type="text"
-                                className="comment-input"
-                                placeholder="Add a comment..."
-                                value={commentText}
-                                onChange={(e) => setCommentText(e.target.value)}
-                            />
-                            <button type="submit" className="comment-submit-btn" disabled={!commentText.trim()}>
-                                <Send size={18} />
-                            </button>
+                        <form onSubmit={handleSubmit}>
+                            <div className="govuk-form-group">
+                                <label className="govuk-label" htmlFor="comment">Add a comment</label>
+                                <div style={{ display: 'flex', gap: '10px' }}>
+                                    <input
+                                        type="text"
+                                        id="comment"
+                                        className="govuk-input"
+                                        placeholder="Add a comment..."
+                                        value={commentText}
+                                        onChange={(e) => setCommentText(e.target.value)}
+                                        style={{ flexGrow: 1 }}
+                                    />
+                                    <button type="submit" className="govuk-button" disabled={!commentText.trim()}>
+                                        Send
+                                    </button>
+                                </div>
+                            </div>
                         </form>
                     ) : (
-                        <div className="comments-closed-message" style={{
-                            padding: '12px',
-                            textAlign: 'center',
-                            backgroundColor: 'var(--bg-app)',
-                            borderRadius: '8px',
-                            color: 'var(--text-secondary)',
-                            fontSize: '14px',
-                            marginTop: '16px'
-                        }}>
+                        <div className="govuk-inset-text">
                             Voting and commenting are closed for this idea.
                         </div>
                     )}

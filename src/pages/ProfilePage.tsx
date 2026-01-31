@@ -1,8 +1,6 @@
 import { useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Plus, ExternalLink, LogOut } from 'lucide-react';
-import logo from '../assets/sprout-wordmark.png';
-import './ProfilePage.css';
+
 
 interface Space {
     id: string;
@@ -59,50 +57,60 @@ export function ProfilePage() {
     }
 
     return (
-        <div className="profile-container">
-            <header className="profile-header">
-                <div className="profile-logo">
-                    <img src={logo} alt="Sprout" style={{ width: '120px', height: 'auto' }} />
-                </div>
-                <div className="profile-actions">
-                    <span className="user-email">{user?.email}</span>
-                    <button onClick={handleLogout} className="logout-btn">
-                        <LogOut size={16} /> Logout
-                    </button>
+        <div className="govuk-width-container">
+            <header className="govuk-header" role="banner" data-module="govuk-header" style={{ marginBottom: '30px' }}>
+                <div className="govuk-header__container govuk-width-container">
+                    <div className="govuk-header__logo">
+                        <span className="govuk-header__logotype">
+                            <span className="govuk-header__logotype-text">
+                                Sprout
+                            </span>
+                        </span>
+                    </div>
+                    <div className="govuk-header__content">
+                        {user && <span className="govuk-body govuk-!-font-weight-bold" style={{ color: 'white', marginRight: '20px' }}>{user.email}</span>}
+                        <button onClick={handleLogout} className="govuk-button govuk-button--secondary govuk-!-margin-bottom-0">
+                            Logout
+                        </button>
+                    </div>
                 </div>
             </header>
 
-            <main className="profile-main">
-                <div className="profile-section">
-                    <div className="section-header">
-                        <h2>Your Spaces</h2>
-                        <Link to="/" className="new-space-btn">
-                            <Plus size={16} /> New Space
-                        </Link>
-                    </div>
+            <main className="govuk-main-wrapper" id="main-content" role="main">
+                <div className="govuk-grid-row">
+                    <div className="govuk-grid-column-two-thirds">
+                        <div className="govuk-flex-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
+                            <h1 className="govuk-heading-xl govuk-!-margin-bottom-0">Your Spaces</h1>
+                            <Link to="/" className="govuk-button govuk-button--start govuk-!-margin-bottom-0">
+                                New Space
+                                <svg className="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+                                    <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+                                </svg>
+                            </Link>
+                        </div>
 
-                    {spaces.length === 0 ? (
-                        <div className="empty-spaces">
-                            <p>You haven't created any spaces yet.</p>
-                            <Link to="/" className="create-first-btn">Create your first space</Link>
-                        </div>
-                    ) : (
-                        <div className="spaces-grid">
-                            {spaces.map(space => (
-                                <Link
-                                    key={space.id}
-                                    to={`/space/${space.slug}`}
-                                    className="space-card"
-                                >
-                                    <div className="space-card-content">
-                                        <h3>{space.name}</h3>
-                                        <span className="space-slug">/{space.slug}</span>
-                                    </div>
-                                    <ExternalLink size={16} className="space-link-icon" />
-                                </Link>
-                            ))}
-                        </div>
-                    )}
+                        {spaces.length === 0 ? (
+                            <div className="govuk-inset-text">
+                                <p className="govuk-body">You haven't created any spaces yet.</p>
+                                <Link to="/" className="govuk-link">Create your first space</Link>
+                            </div>
+                        ) : (
+                            <ul className="govuk-list">
+                                {spaces.map(space => (
+                                    <li key={space.id} style={{ marginBottom: '20px', border: '1px solid #b1b4b6', padding: '20px' }}>
+                                        <h3 className="govuk-heading-m">
+                                            <Link to={`/space/${space.slug}`} className="govuk-link govuk-link--no-visited-state">
+                                                {space.name}
+                                            </Link>
+                                        </h3>
+                                        <p className="govuk-body-s govuk-!-color-secondary">
+                                            /{space.slug}
+                                        </p>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
                 </div>
             </main>
         </div>

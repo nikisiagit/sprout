@@ -1,6 +1,5 @@
-import { useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import logo from '../assets/sprout-wordmark.png';
+import { useNavigate, Link } from 'react-router-dom';
 import { fireConfetti } from '../lib/confetti';
 
 export function LandingPage() {
@@ -60,44 +59,59 @@ export function LandingPage() {
     };
 
     return (
-        <div className="landing-container">
-            <div className="landing-content">
-                <div className="logo-section">
-                    <div className="logo-icon">
-                        <img src={logo} alt="Sprout" style={{ width: '200px', height: 'auto' }} />
-                    </div>
-                    <p>Community tool for product improvements</p>
-                </div>
+        <div className="govuk-width-container">
+            <main className="govuk-main-wrapper" id="main-content" role="main">
+                <div className="govuk-grid-row">
+                    <div className="govuk-grid-column-two-thirds">
+                        <h1 className="govuk-heading-xl">
+                            {productName || "Sprout"}
+                        </h1>
+                        <p className="govuk-body-l">
+                            Community tool for product improvements
+                        </p>
 
-                <form onSubmit={handleCreateSpace} className="create-space-form">
-                    <h2>Create your space</h2>
-                    <p className="form-helper">Enter your product name to generate a feedback board</p>
+                        <form onSubmit={handleCreateSpace} className="govuk-form-group">
+                            <h2 className="govuk-heading-m">Create your space</h2>
+                            <div className="govuk-hint">
+                                Enter your product name to generate a feedback board
+                            </div>
 
-                    <div className="input-group">
-                        <input
-                            type="text"
-                            placeholder="e.g., My Awesome App"
-                            value={productName}
-                            onChange={(e) => setProductName(e.target.value)}
-                            className="space-input"
-                            autoFocus
-                        />
-                        <button type="submit" className="create-btn" disabled={isCheckingAuth}>
-                            {isLoggedIn ? 'Create Space' : 'Continue'}
-                        </button>
-                    </div>
-                </form>
+                            <div className="govuk-form-group">
+                                <label className="govuk-label" htmlFor="product-name">
+                                    Product Name
+                                </label>
+                                <input
+                                    className="govuk-input govuk-!-width-two-thirds"
+                                    id="product-name"
+                                    name="productName"
+                                    type="text"
+                                    placeholder="e.g., My Awesome App"
+                                    value={productName}
+                                    onChange={(e) => setProductName(e.target.value)}
+                                    autoFocus
+                                />
+                            </div>
 
-                {!isCheckingAuth && (
-                    <div className="auth-links">
-                        {isLoggedIn ? (
-                            <Link to="/profile" className="profile-link">Go to Profile →</Link>
-                        ) : (
-                            <p>Already have an account? <Link to="/login">Sign in</Link></p>
+                            <button type="submit" className="govuk-button govuk-button--start" disabled={isCheckingAuth}>
+                                {isLoggedIn ? 'Create Space' : 'Continue'}
+                                <svg className="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+                                    <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+                                </svg>
+                            </button>
+                        </form>
+
+                        {!isCheckingAuth && (
+                            <div className="govuk-body">
+                                {isLoggedIn ? (
+                                    <Link to="/profile" className="govuk-link">Go to Profile →</Link>
+                                ) : (
+                                    <p>Already have an account? <Link to="/login" className="govuk-link">Sign in</Link></p>
+                                )}
+                            </div>
                         )}
                     </div>
-                )}
-            </div>
+                </div>
+            </main>
         </div>
     );
 }
