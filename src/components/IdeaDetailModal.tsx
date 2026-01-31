@@ -114,18 +114,32 @@ export function IdeaDetailModal({ idea, isOpen, onClose, onAddComment, onStatusC
                         )}
                     </div>
 
-                    <form onSubmit={handleSubmit} className="comment-form">
-                        <input
-                            type="text"
-                            className="comment-input"
-                            placeholder="Add a comment..."
-                            value={commentText}
-                            onChange={(e) => setCommentText(e.target.value)}
-                        />
-                        <button type="submit" className="comment-submit-btn" disabled={!commentText.trim()}>
-                            <Send size={18} />
-                        </button>
-                    </form>
+                    {idea.status === 'new' ? (
+                        <form onSubmit={handleSubmit} className="comment-form">
+                            <input
+                                type="text"
+                                className="comment-input"
+                                placeholder="Add a comment..."
+                                value={commentText}
+                                onChange={(e) => setCommentText(e.target.value)}
+                            />
+                            <button type="submit" className="comment-submit-btn" disabled={!commentText.trim()}>
+                                <Send size={18} />
+                            </button>
+                        </form>
+                    ) : (
+                        <div className="comments-closed-message" style={{
+                            padding: '12px',
+                            textAlign: 'center',
+                            backgroundColor: 'var(--bg-app)',
+                            borderRadius: '8px',
+                            color: 'var(--text-secondary)',
+                            fontSize: '14px',
+                            marginTop: '16px'
+                        }}>
+                            Voting and commenting are closed for this idea.
+                        </div>
+                    )}
                 </div>
             </div>
         </Modal>

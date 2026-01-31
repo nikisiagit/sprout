@@ -10,6 +10,17 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
     if (!text) return new Response("Missing text", { status: 400 });
 
+    // Check status
+    const idea = await env.DB.prepare('SELECT status FROM ideas WHERE public_id = ?').bind(ideaId).first();
+
+    if (!idea) {
+        return new Response("Idea not found", { status: 404 });
+    }
+
+    if (idea.status !== 'new') {
+        return new Response("Commenting is closed for this idea", { status: 400 });
+    }
+
     const public_id = crypto.randomUUID();
     const created_at = Date.now();
 

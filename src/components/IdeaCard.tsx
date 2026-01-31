@@ -15,6 +15,12 @@ export function IdeaCard({ idea, onVote, onClick }: IdeaCardProps) {
                 <button
                     className="vote-btn"
                     onClick={(e) => onVote(idea.id, e)}
+                    disabled={idea.status !== 'new'}
+                    style={{
+                        opacity: idea.status !== 'new' ? 0.5 : 1,
+                        cursor: idea.status !== 'new' ? 'not-allowed' : 'pointer'
+                    }}
+                    title={idea.status !== 'new' ? "Voting is closed for this idea" : "Vote for this idea"}
                 >
                     <ChevronUp size={20} />
                 </button>
