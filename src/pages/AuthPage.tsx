@@ -1,5 +1,6 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
+import logo from '../assets/sprout-wordmark.png';
 import { fireConfetti } from '../lib/confetti';
 
 interface AuthPageProps {
@@ -83,91 +84,62 @@ export function AuthPage({ initialMode = 'signup' }: AuthPageProps) {
     };
 
     return (
-        <div className="govuk-width-container">
-            <main className="govuk-main-wrapper" id="main-content" role="main">
-                <div className="govuk-grid-row">
-                    <div className="govuk-grid-column-two-thirds">
-                        {error && (
-                            <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex={-1}>
-                                <h2 className="govuk-error-summary__title" id="error-summary-title">
-                                    There is a problem
-                                </h2>
-                                <div className="govuk-error-summary__body">
-                                    <ul className="govuk-list govuk-error-summary__list">
-                                        <li>
-                                            <a href="#email">{error}</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        )}
-
-                        <h1 className="govuk-heading-xl">
-                            {mode === 'signup' ? 'Create Account' : 'Welcome Back'}
-                        </h1>
-
-                        {spaceInfo && (
-                            <div className="govuk-inset-text">
-                                Creating space: <strong>{spaceInfo.name}</strong>
-                            </div>
-                        )}
-
-                        <p className="govuk-body-l">
-                            {mode === 'signup'
-                                ? 'Sign up to manage your spaces'
-                                : 'Log in to your account'}
-                        </p>
-
-                        <form onSubmit={handleSubmit}>
-                            <div className={`govuk-form-group ${error ? 'govuk-form-group--error' : ''}`}>
-                                <label className="govuk-label" htmlFor="email">
-                                    Email address
-                                </label>
-                                <input
-                                    className={`govuk-input ${error ? 'govuk-input--error' : ''}`}
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    autoComplete="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required
-                                />
-                            </div>
-
-                            <div className="govuk-form-group">
-                                <label className="govuk-label" htmlFor="password">
-                                    Password
-                                </label>
-                                <input
-                                    className="govuk-input"
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    required
-                                />
-                            </div>
-
-                            <button type="submit" className="govuk-button" disabled={isSubmitting}>
-                                {isSubmitting
-                                    ? (mode === 'signup' ? 'Creating...' : 'Logging in...')
-                                    : (mode === 'signup' ? 'Sign Up' : 'Log In')}
-                            </button>
-                        </form>
-
-                        <div className="govuk-body">
-                            {mode === 'signup' ? (
-                                <p>Already have an account? <button onClick={() => setMode('login')} className="govuk-link" style={{ background: 'none', border: 'none', padding: 0, fontSize: 'inherit', fontFamily: 'inherit', cursor: 'pointer' }}>Log in</button></p>
-                            ) : (
-                                <p>Don't have an account? <button onClick={() => setMode('signup')} className="govuk-link" style={{ background: 'none', border: 'none', padding: 0, fontSize: 'inherit', fontFamily: 'inherit', cursor: 'pointer' }}>Sign up</button></p>
-                            )}
-                        </div>
+        <div className="landing-container">
+            <div className="landing-content">
+                <div className="logo-section">
+                    <div className="logo-icon">
+                        <img src={logo} alt="Sprout" style={{ width: '150px', height: 'auto' }} />
                     </div>
                 </div>
-            </main>
+
+                {spaceInfo && (
+                    <div className="pending-space-info">
+                        <p>Creating space: <strong>{spaceInfo.name}</strong></p>
+                    </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="create-space-form">
+                    <h2>{mode === 'signup' ? 'Create Account' : 'Welcome Back'}</h2>
+                    <p className="form-helper">
+                        {mode === 'signup'
+                            ? 'Sign up to manage your spaces'
+                            : 'Log in to your account'}
+                    </p>
+
+                    <div className="input-group">
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="space-input"
+                            required
+                        />
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="space-input"
+                            required
+                        />
+                        {error && <p className="error-message">{error}</p>}
+                        <button type="submit" className="create-btn" disabled={isSubmitting}>
+                            {isSubmitting
+                                ? (mode === 'signup' ? 'Creating...' : 'Logging in...')
+                                : (mode === 'signup' ? 'Sign Up' : 'Log In')}
+                        </button>
+                    </div>
+                </form>
+
+                <div className="auth-toggle">
+                    {mode === 'signup' ? (
+                        <p>Already have an account? <button onClick={() => setMode('login')} className="link-btn">Log in</button></p>
+                    ) : (
+                        <p>Don't have an account? <button onClick={() => setMode('signup')} className="link-btn">Sign up</button></p>
+                    )}
+                </div>
+            </div>
         </div>
     );
 }

@@ -1,0 +1,177 @@
+.idea-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.detail-header h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.vote-badge {
+    background-color: rgba(10, 50, 40, 0.1);
+    /* Green tint */
+    color: var(--accent-primary);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-right: auto;
+    margin-left: 16px;
+}
+
+.status-control {
+    margin: 0;
+}
+
+.jira-sync-btn {
+    background-color: #0052cc;
+    /* Jira Blue */
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.jira-sync-btn:hover {
+    background-color: #0047b3;
+}
+
+.jira-sync-btn:disabled {
+    background-color: #aeb9cc;
+    cursor: wait;
+}
+
+.jira-badge {
+    background-color: #deebff;
+    color: #0052cc;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-select {
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 4px 8px;
+    font-size: 13px;
+    outline: none;
+    cursor: pointer;
+}
+
+.detail-description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.detail-comments-section h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 24px;
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.no-comments {
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-style: italic;
+}
+
+.comment-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-bubble {
+    background-color: var(--bg-input);
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    border-bottom-left-radius: 2px;
+}
+
+.comment-bubble p {
+    color: var(--text-primary);
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.comment-bubble .time {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.comment-form {
+    display: flex;
+    gap: 8px;
+}
+
+.comment-input {
+    flex: 1;
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    outline: none;
+}
+
+.comment-input:focus {
+    border-color: var(--accent-primary);
+}
+
+.comment-submit-btn {
+    background-color: var(--accent-primary);
+    color: white;
+    width: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    transition: background-color 0.2s;
+}
+
+.comment-submit-btn:hover {
+    background-color: var(--accent-hover);
+}
+
+.comment-submit-btn:disabled {
+    background-color: var(--bg-input);
+    color: var(--text-secondary);
+    cursor: not-allowed;
+}
