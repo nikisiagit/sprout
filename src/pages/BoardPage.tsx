@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Search, Share2, ClipboardCheck, LogIn, LogOut, Download, Plus } from 'lucide-react';
+import { Search, Share2, ClipboardCheck, LogIn, Download, Plus } from 'lucide-react';
 import logo from '../assets/sprout-wordmark.png';
 import { Sidebar } from '../components/Sidebar';
+import { ProfileDropdown } from '../components/ProfileDropdown';
 import { IdeaCard } from '../components/IdeaCard';
 import { Modal } from '../components/Modal';
 import { IdeaDetailModal } from '../components/IdeaDetailModal';
@@ -227,14 +228,7 @@ export function BoardPage() {
                     </div>
                     <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                         {isOwner ? (
-                            <button
-                                className="btn-secondary"
-                                onClick={handleLogout}
-                                style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
-                                aria-label="Logout"
-                            >
-                                <LogOut size={16} /> <span className="btn-label">Logout</span>
-                            </button>
+                            <ProfileDropdown onLogout={handleLogout} />
                         ) : (
                             <Link
                                 to={`/login?redirect=/space/${slug}`}
