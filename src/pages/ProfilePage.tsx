@@ -119,7 +119,7 @@ export function ProfilePage() {
                                         <h3>{space.name}</h3>
                                         <span className="space-slug">/{space.slug}</span>
                                     </div>
-                                    <div className="space-card-actions" style={{ display: 'flex', gap: '10px' }}>
+                                    <div className="space-card-actions">
                                         <button
                                             className="delete-btn"
                                             onClick={(e) => handleDeleteSpace(space.slug, e)}
@@ -127,14 +127,17 @@ export function ProfilePage() {
                                                 background: 'none',
                                                 border: 'none',
                                                 cursor: 'pointer',
+                                                padding: '4px',
+                                                display: 'flex',
+                                                alignItems: 'center',
                                                 color: '#d64d4d',
-                                                padding: '5px'
+                                                transition: 'color 0.2s'
                                             }}
                                             title="Delete Space"
                                         >
-                                            <Trash2 size={16} />
+                                            <Trash2 size={18} />
                                         </button>
-                                        <ExternalLink size={16} className="space-link-icon" />
+                                        <ExternalLink size={18} className="space-link-icon" />
                                     </div>
                                 </Link>
                             ))}

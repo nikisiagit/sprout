@@ -119,6 +119,7 @@
 }
 
 .space-card {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -128,12 +129,35 @@
     border-radius: var(--radius-md);
     text-decoration: none;
     transition: all 0.2s;
+    overflow: hidden;
+    /* Ensure content doesn't overflow */
 }
 
-.space-card:hover {
-    border-color: var(--accent-primary);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+.space-card-content {
+    flex: 1;
+    min-width: 0;
+    /* Allow text truncate */
+    margin-right: 16px;
+}
+
+.space-card-actions {
+    display: flex;
+    /* Ensure flex for items inside */
+    align-items: center;
+    /* Vertical alignment */
+    gap: 12px;
+    flex-shrink: 0;
+    /* Prevent shrinking */
+}
+
+.error-message {
+    color: #d64d4d;
+    background-color: #fde8e8;
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 20px;
+    text-align: center;
+    border: 1px solid #fecaca;
 }
 
 .space-card-content h3 {
