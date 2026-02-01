@@ -257,7 +257,7 @@ export function BoardPage() {
                                 <Download size={16} /> Export CSV
                             </a>
                         )}
-                        <button className="btn-primary" onClick={() => setIsModalOpen(true)}>Suggest idea</button>
+                        <button className="btn-primary btn-flash" onClick={() => setIsModalOpen(true)}>Suggest idea</button>
                     </div>
                 </div>
 

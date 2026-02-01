@@ -7,3 +7,21 @@
     color: var(--text-secondary);
     font-size: 16px;
 }
+
+@keyframes flash-border {
+    0% {
+        box-shadow: 0 0 0 0 rgba(10, 50, 40, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 6px rgba(10, 50, 40, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(10, 50, 40, 0);
+    }
+}
+
+.btn-flash {
+    animation: flash-border 2s infinite;
+}
