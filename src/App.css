@@ -100,15 +100,47 @@
 }
 
 @media (max-width: 768px) {
+  .app-container {
+    padding: 20px 16px;
+  }
+
+  .header-top {
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
+  }
+
+  .header-top>div:last-child {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .header-top button,
+  .header-top a {
+    width: 100%;
+    justify-content: center;
+    min-height: 48px;
+    /* Accessible touch target */
+  }
+
   .main-layout {
     grid-template-columns: 1fr;
+    gap: 30px;
   }
 
   .sidebar {
     width: 100%;
-    order: -1;
-    /* Sidebar on top on mobile? Or bottom? Usually filters on top */
+    order: 1;
+    /* Sidebar below content on mobile */
   }
+}
+
+/* Ensure buttons have good touch targets */
+button,
+.btn-primary,
+.btn-secondary {
+  min-height: 44px;
 }
 
 /* Modal Form Styles */

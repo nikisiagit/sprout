@@ -8,9 +8,12 @@
   --bg-input: #b4dcb1;
   --bg-hover: #b4dcb1;
 
-  --text-primary: #0A3228;
+  /* AA: 4.5:1, AAA: 7:1 against light background */
+  --text-primary: #051F19;
+  /* Darkened from #0A3228 for stricter AAA */
   /* Dark Forest Green */
-  --text-secondary: #305850;
+  --text-secondary: #0A3228;
+  /* Using the old primary as secondary for better contrast */
 
   --accent-primary: #0A3228;
   /* Same as text for strong branding */

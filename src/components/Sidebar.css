@@ -19,7 +19,9 @@
 }
 
 .sidebar {
-    width: 280px;
+    width: 100%;
+    /* Let parent grid control width, but set defaults */
+    min-width: 250px;
     background-color: var(--bg-card);
     border-radius: var(--radius-lg);
     padding: 16px;
@@ -48,7 +50,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 12px;
+    padding: 14px 12px;
+    /* Increased for touch target */
+    min-height: 48px;
     border-radius: var(--radius-sm);
     color: var(--text-secondary);
     font-size: 14px;
