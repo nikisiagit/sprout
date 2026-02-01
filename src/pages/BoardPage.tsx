@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Search, Share2, ClipboardCheck, LogIn, LogOut } from 'lucide-react';
+import { Search, Share2, ClipboardCheck, LogIn, LogOut, Download } from 'lucide-react';
 import logo from '../assets/sprout-wordmark.png';
 import { Sidebar } from '../components/Sidebar';
 import { IdeaCard } from '../components/IdeaCard';
@@ -247,6 +247,16 @@ export function BoardPage() {
                             {isCopied ? <ClipboardCheck size={16} /> : <Share2 size={16} />}
                             {isCopied ? 'Copied Link' : 'Share'}
                         </button>
+                        {isOwner && (
+                            <a
+                                href={`/api/spaces/${slug}/export`}
+                                className="btn-secondary"
+                                style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', color: 'inherit' }}
+                                download
+                            >
+                                <Download size={16} /> Export CSV
+                            </a>
+                        )}
                         <button className="btn-primary" onClick={() => setIsModalOpen(true)}>Suggest idea</button>
                     </div>
                 </div>
