@@ -112,16 +112,29 @@
 
   .header-top>div:last-child {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    /* Keep buttons in a row */
+    gap: 12px;
     width: 100%;
+    justify-content: flex-end;
+    /* Or space-between? */
   }
 
   .header-top button,
   .header-top a {
-    width: 100%;
+    width: auto;
+    /* Buttons don't need full width anymore if icons only */
+    padding: 10px;
+    /* Square-ish aspect ratio */
     justify-content: center;
     min-height: 48px;
-    /* Accessible touch target */
+    flex: 0 0 auto;
+    /* Don't grow */
+  }
+
+  .btn-label {
+    display: none;
+    /* Hide text on mobile */
   }
 
   .main-layout {

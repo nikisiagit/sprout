@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Search, Share2, ClipboardCheck, LogIn, LogOut, Download } from 'lucide-react';
+import { Search, Share2, ClipboardCheck, LogIn, LogOut, Download, Plus } from 'lucide-react';
 import logo from '../assets/sprout-wordmark.png';
 import { Sidebar } from '../components/Sidebar';
 import { IdeaCard } from '../components/IdeaCard';
@@ -231,21 +231,23 @@ export function BoardPage() {
                                 className="btn-secondary"
                                 onClick={handleLogout}
                                 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+                                aria-label="Logout"
                             >
-                                <LogOut size={16} /> Logout
+                                <LogOut size={16} /> <span className="btn-label">Logout</span>
                             </button>
                         ) : (
                             <Link
                                 to={`/login?redirect=/space/${slug}`}
                                 className="btn-secondary"
                                 style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}
+                                aria-label="Owner Login"
                             >
-                                <LogIn size={16} /> Owner Login
+                                <LogIn size={16} /> <span className="btn-label">Owner Login</span>
                             </Link>
                         )}
-                        <button className="btn-secondary" onClick={handleShare} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <button className="btn-secondary" onClick={handleShare} style={{ display: 'flex', alignItems: 'center', gap: '8px' }} aria-label="Share">
                             {isCopied ? <ClipboardCheck size={16} /> : <Share2 size={16} />}
-                            {isCopied ? 'Copied Link' : 'Share'}
+                            <span className="btn-label">{isCopied ? 'Copied Link' : 'Share'}</span>
                         </button>
                         {isOwner && (
                             <a
@@ -253,11 +255,14 @@ export function BoardPage() {
                                 className="btn-secondary"
                                 style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', color: 'inherit' }}
                                 download
+                                aria-label="Export CSV"
                             >
-                                <Download size={16} /> Export CSV
+                                <Download size={16} /> <span className="btn-label">Export CSV</span>
                             </a>
                         )}
-                        <button className="btn-primary btn-flash" onClick={() => setIsModalOpen(true)}>Suggest idea</button>
+                        <button className="btn-primary btn-flash" onClick={() => setIsModalOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: '8px' }} aria-label="Suggest idea">
+                            <Plus size={16} /> <span className="btn-label">Suggest idea</span>
+                        </button>
                     </div>
                 </div>
 
