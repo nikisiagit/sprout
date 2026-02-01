@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.cdnfonts.com/css/google-sans');
 
 :root {
   --bg-app: #C9EAC2;
@@ -22,7 +22,7 @@
   --radius-md: 12px;
   --radius-lg: 16px;
 
-  --font-sans: 'Inter', sans-serif;
+  --font-sans: 'Product Sans', 'Google Sans', sans-serif;
 }
 
 * {
