@@ -4,6 +4,8 @@ import { BoardPage } from './pages/BoardPage';
 import { AuthPage } from './pages/AuthPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { ChangelogPage } from './pages/ChangelogPage';
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
+import { ResetPasswordPage } from './pages/ResetPasswordPage';
 import './App.css';
 import './pages/LandingPage.css';
 import './pages/BoardPage.css';
@@ -17,6 +19,8 @@ function App() {
         <Route path="/signup" element={<AuthPage initialMode="signup" />} />
         <Route path="/login" element={<AuthPage initialMode="login" />} />
         <Route path="/auth" element={<AuthPage initialMode="signup" />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/space/:slug" element={<BoardPage />} />
         <Route path="/changelog" element={<ChangelogPage />} />

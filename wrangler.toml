@@ -6,3 +6,8 @@ pages_build_output_dir = "dist"
 binding = "DB"
 database_name = "sprout-db"
 database_id = "a5461010-dba6-4109-8deb-dea89054d193"
+
+[vars]
+GOOGLE_CLIENT_ID = "951080254273-ejqgsgjq15r68be600nmk0na02a7ebp0.apps.googleusercontent.com"
+VITE_GOOGLE_CLIENT_ID = "951080254273-ejqgsgjq15r68be600nmk0na02a7ebp0.apps.googleusercontent.com"
+BASE_URL = "https://sprout-4sz.pages.dev/"

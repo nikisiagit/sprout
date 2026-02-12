@@ -1,5 +1,5 @@
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import logo from '../assets/sprout-wordmark.png';
 import { fireConfetti } from '../lib/confetti';
 
@@ -13,11 +13,68 @@ export function AuthPage({ initialMode = 'signup' }: AuthPageProps) {
     const [password, setPassword] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
     const pendingSpace = localStorage.getItem('pendingSpace');
     const spaceInfo = pendingSpace ? JSON.parse(pendingSpace) : null;
+
+    useEffect(() => {
+        if (searchParams.get('verified') === 'true') {
+            setSuccessMessage('Email verified successfully! You can now log in.');
+        }
+    }, [searchParams]);
+
+    useEffect(() => {
+        // Initialize Google Sign-In
+        if (window.google) {
+            window.google.accounts.id.initialize({
+                client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+                callback: handleGoogleResponse,
+            });
+            window.google.accounts.id.renderButton(
+                document.getElementById("google-signin-button"),
+                { theme: "outline", size: "large", width: "100%" }
+            );
+        }
+    }, []);
+
+    const handleGoogleResponse = async (response: any) => {
+        setIsSubmitting(true);
+        setError('');
+        try {
+            const res = await fetch('/api/auth/google-login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ credential: response.credential })
+            });
+
+            const data = await res.json() as any;
+            if (!res.ok) throw new Error(data.error || 'Google login failed');
+
+            // Handle success (similar to regular login)
+            if (spaceInfo) {
+                const createRes = await fetch('/api/spaces', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: spaceInfo.name, slug: spaceInfo.slug })
+                });
+                if (createRes.ok) {
+                    fireConfetti();
+                    localStorage.removeItem('pendingSpace');
+                    navigate(`/space/${spaceInfo.slug}`);
+                    return;
+                }
+            }
+
+            navigate('/profile');
+        } catch (err: any) {
+            setError(err.message);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -124,12 +181,23 @@ export function AuthPage({ initialMode = 'signup' }: AuthPageProps) {
                             required
                         />
                         {error && <p className="error-message">{error}</p>}
+                        {successMessage && <p className="success-message">{successMessage}</p>}
                         <button type="submit" className="create-btn" disabled={isSubmitting}>
                             {isSubmitting
                                 ? (mode === 'signup' ? 'Creating...' : 'Logging in...')
                                 : (mode === 'signup' ? 'Sign Up' : 'Log In')}
                         </button>
                     </div>
+
+                    {mode === 'login' && (
+                        <div style={{ textAlign: 'center', marginTop: '10px' }}>
+                            <Link to="/forgot-password" style={{ fontSize: '0.9rem', opacity: 0.8 }}>Forgot password?</Link>
+                        </div>
+                    )}
+
+                    <div className="divider"><span>OR</span></div>
+
+                    <div id="google-signin-button" style={{ marginTop: '15px' }}></div>
                 </form>
 
                 <div className="auth-toggle">
