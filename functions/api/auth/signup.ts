@@ -12,8 +12,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     try {
         const { email, password, spaceName, spaceSlug } = await request.json() as any;
 
-        if (!email || !password || !spaceSlug || !spaceName) {
-            return new Response(JSON.stringify({ error: "Missing required fields" }), { status: 400 });
+        if (!email || !password) {
+            return new Response(JSON.stringify({ error: "Email and password are required" }), { status: 400 });
         }
 
         // 1. Check if user with email already exists
@@ -22,10 +22,12 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
             return new Response(JSON.stringify({ error: "User already exists with this email" }), { status: 409 });
         }
 
-        // 2. Check if space slug exists
-        const existingSpace = await env.DB.prepare("SELECT * FROM spaces WHERE slug = ?").bind(spaceSlug).first();
-        if (existingSpace) {
-            return new Response(JSON.stringify({ error: "Space URL is already taken. Please go back and choose another name." }), { status: 409 });
+        // 2. Check if space slug exists (only if creating a space)
+        if (spaceSlug) {
+            const existingSpace = await env.DB.prepare("SELECT * FROM spaces WHERE slug = ?").bind(spaceSlug).first();
+            if (existingSpace) {
+                return new Response(JSON.stringify({ error: "Space URL is already taken. Please go back and choose another name." }), { status: 409 });
+            }
         }
 
         // 3. Hash Password
@@ -50,10 +52,12 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
         const userId = userRes.id as number;
 
-        // 5. Create Space
-        await env.DB.prepare(
-            "INSERT INTO spaces (public_id, slug, name, owner_id, created_at) VALUES (?, ?, ?, ?, ?)"
-        ).bind(crypto.randomUUID(), spaceSlug, spaceName, userPublicId, createdAt).run();
+        // 5. Create Space (if info provided)
+        if (spaceSlug && spaceName) {
+            await env.DB.prepare(
+                "INSERT INTO spaces (public_id, slug, name, owner_id, created_at) VALUES (?, ?, ?, ?, ?)"
+            ).bind(crypto.randomUUID(), spaceSlug, spaceName, userPublicId, createdAt).run();
+        }
 
         // 6. Send Verification Email
         const baseUrl = env.BASE_URL || new URL(request.url).origin;
