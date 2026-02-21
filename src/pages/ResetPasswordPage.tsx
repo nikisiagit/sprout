@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import logo from '../assets/sprout-wordmark.png';
+import './AuthPage.css';
 
 export function ResetPasswordPage() {
     const [password, setPassword] = useState('');
@@ -48,41 +49,39 @@ export function ResetPasswordPage() {
     };
 
     return (
-        <div className="landing-container">
-            <div className="landing-content">
-                <div className="logo-section">
-                    <div className="logo-icon">
-                        <img src={logo} alt="Sprout" style={{ width: '150px', height: 'auto' }} />
-                    </div>
-                </div>
+        <div className="auth-page">
+            <nav className="auth-nav">
+                <Link to="/">
+                    <img src={logo} alt="Sprout" className="logo-img" />
+                </Link>
+            </nav>
 
-                <form onSubmit={handleSubmit} className="create-space-form">
-                    <h2>New Password</h2>
-                    <p className="form-helper">Enter your new password below.</p>
+            <div className="auth-card">
+                <h2 className="auth-title">New Password</h2>
+                <p className="auth-subtitle">Enter your new password below.</p>
 
-                    <div className="input-group">
-                        <input
-                            type="password"
-                            placeholder="New Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="space-input"
-                            required
-                        />
-                        <input
-                            type="password"
-                            placeholder="Confirm New Password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            className="space-input"
-                            required
-                        />
-                        {error && <p className="error-message">{error}</p>}
-                        {message && <p className="success-message">{message}</p>}
-                        <button type="submit" className="create-btn" disabled={isSubmitting}>
-                            {isSubmitting ? 'Updating...' : 'Reset Password'}
-                        </button>
-                    </div>
+                <form onSubmit={handleSubmit} className="auth-form">
+                    <input
+                        type="password"
+                        placeholder="New Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="auth-input"
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="Confirm New Password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        className="auth-input"
+                        required
+                    />
+                    {error && <p className="error-message">{error}</p>}
+                    {message && <p className="success-message">{message}</p>}
+                    <button type="submit" className="auth-btn" disabled={isSubmitting}>
+                        {isSubmitting ? 'Updating...' : 'Reset Password'}
+                    </button>
                 </form>
             </div>
         </div>

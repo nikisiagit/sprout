@@ -1,13 +1,15 @@
 import { useNavigate, Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import logo from '../assets/sprout-wordmark.png';
 import { fireConfetti } from '../lib/confetti';
+import './LandingPage.css';
 
 export function LandingPage() {
     const [productName, setProductName] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isCheckingAuth, setIsCheckingAuth] = useState(true);
     const navigate = useNavigate();
+    const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         checkAuth();
@@ -59,45 +61,90 @@ export function LandingPage() {
         }
     };
 
+    const handleGetStarted = (e: React.MouseEvent) => {
+        e.preventDefault();
+        inputRef.current?.focus();
+    };
+
     return (
-        <div className="landing-container">
-            <div className="landing-content">
-                <div className="logo-section">
-                    <div className="logo-icon">
-                        <img src={logo} alt="Sprout" style={{ width: '200px', height: 'auto' }} />
-                    </div>
-                    <p>Community tool for product improvements</p>
+        <div className="landing-page">
+            <nav className="landing-nav">
+                <Link to="/">
+                    <img src={logo} alt="Sprout" className="logo-img" />
+                </Link>
+                <div className="nav-actions">
+                    {!isCheckingAuth && (
+                        isLoggedIn ? (
+                            <Link to="/profile" className="nav-btn">Dashboard</Link>
+                        ) : (
+                            <>
+                                <Link to="/login" className="nav-link">Sign in</Link>
+                                <button onClick={handleGetStarted} className="nav-btn">Get Started</button>
+                            </>
+                        )
+                    )}
+                </div>
+            </nav>
+
+            <main className="hero-section">
+                <div className="hero-badge">
+                    ✨ The easiest way to gather user feedback
                 </div>
 
-                <form onSubmit={handleCreateSpace} className="create-space-form">
-                    <h2>Create your space</h2>
-                    <p className="form-helper">Enter your product name to generate a feedback board</p>
+                <h1 className="hero-title">
+                    Build products people <span className="highlight-circle">actually</span> want.
+                </h1>
 
-                    <div className="input-group">
+                <p className="hero-subtitle">
+                    Sprout is a simple, beautiful tool to collect, organize,
+                    and prioritize features your users need. Set up your feedback space in seconds.
+                </p>
+
+                <div className="hero-cta">
+                    <form onSubmit={handleCreateSpace} className="hero-form">
                         <input
+                            ref={inputRef}
                             type="text"
-                            placeholder="e.g., My Awesome App"
+                            placeholder="Enter your product name..."
                             value={productName}
                             onChange={(e) => setProductName(e.target.value)}
-                            className="space-input"
+                            className="hero-input"
                             autoFocus
                         />
-                        <button type="submit" className="create-btn" disabled={isCheckingAuth}>
-                            {isLoggedIn ? 'Create Space' : 'Continue'}
+                        <button type="submit" className="hero-btn" disabled={isCheckingAuth}>
+                            Create your space
                         </button>
-                    </div>
-                </form>
+                    </form>
+                </div>
+            </main>
 
-                {!isCheckingAuth && (
-                    <div className="auth-links">
-                        {isLoggedIn ? (
-                            <Link to="/profile" className="profile-link">Go to Profile →</Link>
-                        ) : (
-                            <p>Already have an account? <Link to="/login">Sign in</Link></p>
-                        )}
+            <section className="features-section">
+                <div className="features-grid">
+                    <div className="feature-card">
+                        <div className="feature-icon">💬</div>
+                        <h3 className="feature-title">Feedback Boards</h3>
+                        <p className="feature-desc">
+                            Give your users a dedicated place to share their ideas, requests, and feedback without cluttering your inbox.
+                        </p>
                     </div>
-                )}
-            </div>
+
+                    <div className="feature-card">
+                        <div className="feature-icon">⬆️</div>
+                        <h3 className="feature-title">Upvoting & Prioritization</h3>
+                        <p className="feature-desc">
+                            Let your community vote on features so you always know what to build next based on real demand.
+                        </p>
+                    </div>
+
+                    <div className="feature-card">
+                        <div className="feature-icon">✨</div>
+                        <h3 className="feature-title">Instant Setup</h3>
+                        <p className="feature-desc">
+                            No complex configurations. Create your space in seconds, start collecting feedback immediately.
+                        </p>
+                    </div>
+                </div>
+            </section>
         </div>
     );
 }

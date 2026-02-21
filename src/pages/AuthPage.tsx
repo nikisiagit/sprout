@@ -2,6 +2,7 @@ import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import logo from '../assets/sprout-wordmark.png';
 import { fireConfetti } from '../lib/confetti';
+import './AuthPage.css';
 
 interface AuthPageProps {
     initialMode?: 'signup' | 'login';
@@ -141,70 +142,76 @@ export function AuthPage({ initialMode = 'signup' }: AuthPageProps) {
     };
 
     return (
-        <div className="landing-container">
-            <div className="landing-content">
-                <div className="logo-section">
-                    <div className="logo-icon">
-                        <img src={logo} alt="Sprout" style={{ width: '150px', height: 'auto' }} />
-                    </div>
-                </div>
+        <div className="auth-page">
+            <nav className="auth-nav">
+                <Link to="/">
+                    <img src={logo} alt="Sprout" className="logo-img" />
+                </Link>
+            </nav>
 
+            <div className="auth-card">
                 {spaceInfo && (
-                    <div className="pending-space-info">
-                        <p>Creating space: <strong>{spaceInfo.name}</strong></p>
+                    <div className="pending-space-badge">
+                        ✨ Creating space: {spaceInfo.name}
                     </div>
                 )}
 
-                <form onSubmit={handleSubmit} className="create-space-form">
-                    <h2>{mode === 'signup' ? 'Create Account' : 'Welcome Back'}</h2>
-                    <p className="form-helper">
-                        {mode === 'signup'
-                            ? 'Sign up to manage your spaces'
-                            : 'Log in to your account'}
-                    </p>
+                <h2 className="auth-title">{mode === 'signup' ? 'Create Account' : 'Welcome Back'}</h2>
+                <p className="auth-subtitle">
+                    {mode === 'signup'
+                        ? 'Sign up to manage your spaces'
+                        : 'Log in to your account'}
+                </p>
 
-                    <div className="input-group">
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="space-input"
-                            required
-                        />
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="space-input"
-                            required
-                        />
-                        {error && <p className="error-message">{error}</p>}
-                        {successMessage && <p className="success-message">{successMessage}</p>}
-                        <button type="submit" className="create-btn" disabled={isSubmitting}>
-                            {isSubmitting
-                                ? (mode === 'signup' ? 'Creating...' : 'Logging in...')
-                                : (mode === 'signup' ? 'Sign Up' : 'Log In')}
-                        </button>
-                    </div>
-
-                    {mode === 'login' && (
-                        <div style={{ textAlign: 'center', marginTop: '10px' }}>
-                            <Link to="/forgot-password" style={{ fontSize: '0.9rem', opacity: 0.8 }}>Forgot password?</Link>
-                        </div>
-                    )}
-
-                    <div className="divider"><span>OR</span></div>
-
-                    <div id="google-signin-button" style={{ marginTop: '15px' }}></div>
+                <form onSubmit={handleSubmit} className="auth-form">
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="auth-input"
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="auth-input"
+                        required
+                    />
+                    {error && <p className="error-message">{error}</p>}
+                    {successMessage && <p className="success-message">{successMessage}</p>}
+                    <button type="submit" className="auth-btn" disabled={isSubmitting}>
+                        {isSubmitting
+                            ? (mode === 'signup' ? 'Creating...' : 'Logging in...')
+                            : (mode === 'signup' ? 'Sign Up' : 'Log In')}
+                    </button>
                 </form>
 
-                <div className="auth-toggle">
+                {mode === 'login' && (
+                    <div style={{ marginTop: '1rem' }}>
+                        <Link to="/forgot-password" style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                            Forgot password?
+                        </Link>
+                    </div>
+                )}
+
+                <div className="auth-divider">OR</div>
+
+                <div id="google-signin-button" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}></div>
+
+                <div className="auth-footer">
                     {mode === 'signup' ? (
-                        <p>Already have an account? <button onClick={() => setMode('login')} className="link-btn">Log in</button></p>
+                        <p>
+                            Already have an account?{' '}
+                            <button onClick={() => setMode('login')} className="auth-link">Log in</button>
+                        </p>
                     ) : (
-                        <p>Don't have an account? <button onClick={() => setMode('signup')} className="link-btn">Sign up</button></p>
+                        <p>
+                            Don't have an account?{' '}
+                            <button onClick={() => setMode('signup')} className="auth-link">Sign up</button>
+                        </p>
                     )}
                 </div>
             </div>
