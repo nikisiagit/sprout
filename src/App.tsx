@@ -7,6 +7,7 @@ import { ChangelogPage } from './pages/ChangelogPage';
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
 import { ResetPasswordPage } from './pages/ResetPasswordPage';
 import { GetStartedPage } from './pages/GetStartedPage';
+import { PricingPage } from './pages/PricingPage';
 import './App.css';
 import './pages/LandingPage.css';
 import './pages/BoardPage.css';
@@ -26,6 +27,7 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/space/:slug" element={<BoardPage />} />
         <Route path="/changelog" element={<ChangelogPage />} />
+        <Route path="/pricing" element={<PricingPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

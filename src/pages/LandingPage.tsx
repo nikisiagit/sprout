@@ -2,6 +2,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import logo from '../assets/sprout-wordmark.png';
 import { fireConfetti } from '../lib/confetti';
+import { Footer } from '../components/Footer';
 import './LandingPage.css';
 
 export function LandingPage() {
@@ -138,6 +139,7 @@ export function LandingPage() {
                     </div>
                 </div>
             </section>
+            <Footer />
         </div>
     );
 }
