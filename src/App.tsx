@@ -6,6 +6,7 @@ import { ProfilePage } from './pages/ProfilePage';
 import { ChangelogPage } from './pages/ChangelogPage';
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
 import { ResetPasswordPage } from './pages/ResetPasswordPage';
+import { GetStartedPage } from './pages/GetStartedPage';
 import './App.css';
 import './pages/LandingPage.css';
 import './pages/BoardPage.css';
@@ -16,6 +17,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/get-started" element={<GetStartedPage />} />
         <Route path="/signup" element={<AuthPage initialMode="signup" />} />
         <Route path="/login" element={<AuthPage initialMode="login" />} />
         <Route path="/auth" element={<AuthPage initialMode="signup" />} />

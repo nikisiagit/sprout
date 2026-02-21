@@ -1,5 +1,5 @@
 import { useNavigate, Link } from 'react-router-dom';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import logo from '../assets/sprout-wordmark.png';
 import { fireConfetti } from '../lib/confetti';
 import './LandingPage.css';
@@ -9,7 +9,6 @@ export function LandingPage() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isCheckingAuth, setIsCheckingAuth] = useState(true);
     const navigate = useNavigate();
-    const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         checkAuth();
@@ -61,11 +60,6 @@ export function LandingPage() {
         }
     };
 
-    const handleGetStarted = (e: React.MouseEvent) => {
-        e.preventDefault();
-        inputRef.current?.focus();
-    };
-
     return (
         <div className="landing-page">
             <nav className="landing-nav">
@@ -79,7 +73,7 @@ export function LandingPage() {
                         ) : (
                             <>
                                 <Link to="/login" className="nav-link">Sign in</Link>
-                                <button onClick={handleGetStarted} className="nav-btn">Get Started</button>
+                                <Link to="/get-started" className="nav-btn">Get Started</Link>
                             </>
                         )
                     )}
@@ -103,7 +97,6 @@ export function LandingPage() {
                 <div className="hero-cta">
                     <form onSubmit={handleCreateSpace} className="hero-form">
                         <input
-                            ref={inputRef}
                             type="text"
                             placeholder="Enter your product name..."
                             value={productName}
