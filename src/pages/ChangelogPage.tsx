@@ -13,41 +13,6 @@ export function ChangelogPage() {
             title: 'Pricing & UI Updates',
             description: 'Added a hand-drawn animation to the landing page, moved the Pricing link to the main navigation, refined the Free tier to be completely free forever, outlined Paid tier features, and added a Waitlist for upcoming features.',
             tags: ['feature', 'ui']
-        },
-        {
-            id: '5',
-            date: '2026-01-30',
-            title: 'Jira Integration',
-            description: 'You can now sync ideas directly to your Jira projects. Supports basic Jira Software and Jira Product Discovery.',
-            tags: ['feature', 'integration']
-        },
-        {
-            id: '4',
-            date: '2026-01-30',
-            title: 'Logo Fixes',
-            description: 'Fixed an issue where the logo would overlap with the product name on smaller screens.',
-            tags: ['fix', 'ui']
-        },
-        {
-            id: '3',
-            date: '2026-01-30',
-            title: 'Status Management',
-            description: 'Added the ability to change idea status (New, In Progress, Rejected, Done) directly from the details view.',
-            tags: ['feature']
-        },
-        {
-            id: '2',
-            date: '2026-01-29',
-            title: 'Cloudflare D1 Migration',
-            description: 'Migrated the database layer from Supabase to Cloudflare D1 for better performance and edge compatibility.',
-            tags: ['infrastructure']
-        },
-        {
-            id: '1',
-            date: '2026-01-28',
-            title: 'Initial Launch',
-            description: 'Sprout is live! Create spaces, submit ideas, vote, and comment.',
-            tags: ['release']
         }
     ];
 
