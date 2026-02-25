@@ -21,7 +21,7 @@ export function PricingPage() {
                 body: JSON.stringify({ email: waitlistEmail })
             });
             if (res.ok) {
-                setWaitlistMessage('Thanks for joining!');
+                setWaitlistMessage("Thanks! We'll keep you posted.");
                 setWaitlistEmail('');
             } else {
                 setWaitlistMessage('Failed to join. Please try again.');
