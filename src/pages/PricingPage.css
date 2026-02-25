@@ -148,6 +148,41 @@
     transform: translateY(-2px);
 }
 
+.waitlist-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.waitlist-input {
+    padding: 1rem;
+    border: 1px solid rgba(158, 203, 168, 0.4);
+    border-radius: var(--radius-md, 8px);
+    background-color: transparent;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-family: inherit;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.waitlist-input:focus {
+    border-color: var(--accent-primary);
+}
+
+.waitlist-submit {
+    margin: 0;
+}
+
+.waitlist-msg {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+}
+
 @keyframes fadeInUp {
     from {
         opacity: 0;

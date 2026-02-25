@@ -60,3 +60,9 @@ CREATE INDEX idx_ideas_space ON ideas(space_slug);
 CREATE INDEX idx_comments_idea ON comments(idea_id);
 CREATE INDEX idx_users_email ON users(email);
 CREATE INDEX idx_users_google ON users(google_id);
+
+CREATE TABLE IF NOT EXISTS waitlist (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  email TEXT NOT NULL UNIQUE,
+  created_at INTEGER NOT NULL
+);
