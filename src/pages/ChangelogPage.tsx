@@ -8,6 +8,13 @@ export function ChangelogPage() {
 
     const changes: ChangelogItem[] = [
         {
+            id: '6',
+            date: '2026-02-25',
+            title: 'Pricing & UI Updates',
+            description: 'Added a hand-drawn animation to the landing page, moved the Pricing link to the main navigation, refined the Free tier to be completely free forever, outlined Paid tier features, and added a Waitlist for upcoming features.',
+            tags: ['feature', 'ui']
+        },
+        {
             id: '5',
             date: '2026-01-30',
             title: 'Jira Integration',

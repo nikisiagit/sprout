@@ -7,7 +7,7 @@ export function Footer() {
             <div className="footer-content">
                 <div className="footer-links">
                     <Link to="/changelog" className="footer-link">Changelog</Link>
-                    <a href="https://sprout-4sz.pages.dev/space/bhculturecalendar" target="_blank" rel="noopener noreferrer" className="footer-link">
+                    <a href="https://sproutideas.xyz/space/sprout" target="_blank" rel="noopener noreferrer" className="footer-link">
                         Submit your idea
                     </a>
                 </div>
