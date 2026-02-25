@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { Menu, X } from 'lucide-react';
 import { Footer } from '../components/Footer';
 import logo from '../assets/sprout-wordmark.png';
 import './PricingPage.css';
@@ -9,6 +10,7 @@ export function PricingPage() {
     const [waitlistEmail, setWaitlistEmail] = useState('');
     const [isWaitlistSubmitting, setIsWaitlistSubmitting] = useState(false);
     const [waitlistMessage, setWaitlistMessage] = useState('');
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const handleWaitlistSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -39,10 +41,20 @@ export function PricingPage() {
                 <Link to="/">
                     <img src={logo} alt="Sprout" className="logo-img" />
                 </Link>
-                <div className="nav-actions">
-                    <Link to="/pricing" className="nav-link">Pricing</Link>
-                    <Link to="/login" className="nav-link">Sign in</Link>
-                    <Link to="/get-started" className="nav-btn">Get Started</Link>
+
+                {/* Mobile Menu Toggle Button */}
+                <button
+                    className="mobile-menu-btn"
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    aria-label="Toggle menu"
+                >
+                    {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
+
+                <div className={`nav-actions ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
+                    <Link to="/pricing" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>Pricing</Link>
+                    <Link to="/login" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>Sign in</Link>
+                    <Link to="/get-started" className="nav-btn" onClick={() => setIsMobileMenuOpen(false)}>Get Started</Link>
                 </div>
             </nav>
 

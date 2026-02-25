@@ -265,7 +265,44 @@
     }
 }
 
+.mobile-menu-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 100;
+}
+
 @media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .nav-actions {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--bg-card);
+        flex-direction: column;
+        padding: 2rem;
+        gap: 1.5rem;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(158, 203, 168, 0.3);
+        z-index: 99;
+    }
+
+    .nav-actions.mobile-open {
+        display: flex;
+    }
+
+    .landing-nav {
+        position: relative;
+    }
+
     .hero-title {
         font-size: 2.5rem;
     }

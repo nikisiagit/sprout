@@ -1,5 +1,6 @@
 import { useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { Menu, X } from 'lucide-react';
 import logo from '../assets/sprout-wordmark.png';
 import { fireConfetti } from '../lib/confetti';
 import { Footer } from '../components/Footer';
@@ -9,6 +10,7 @@ export function LandingPage() {
     const [productName, setProductName] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -67,15 +69,25 @@ export function LandingPage() {
                 <Link to="/">
                     <img src={logo} alt="Sprout" className="logo-img" />
                 </Link>
-                <div className="nav-actions">
-                    <Link to="/pricing" className="nav-link">Pricing</Link>
+
+                {/* Mobile Menu Toggle Button */}
+                <button
+                    className="mobile-menu-btn"
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    aria-label="Toggle menu"
+                >
+                    {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
+
+                <div className={`nav-actions ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
+                    <Link to="/pricing" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>Pricing</Link>
                     {!isCheckingAuth && (
                         isLoggedIn ? (
-                            <Link to="/profile" className="nav-btn">Dashboard</Link>
+                            <Link to="/profile" className="nav-btn" onClick={() => setIsMobileMenuOpen(false)}>Dashboard</Link>
                         ) : (
                             <>
-                                <Link to="/login" className="nav-link">Sign in</Link>
-                                <Link to="/get-started" className="nav-btn">Get Started</Link>
+                                <Link to="/login" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>Sign in</Link>
+                                <Link to="/get-started" className="nav-btn" onClick={() => setIsMobileMenuOpen(false)}>Get Started</Link>
                             </>
                         )
                     )}
