@@ -6,7 +6,6 @@ export function Footer() {
         <footer className="site-footer">
             <div className="footer-content">
                 <div className="footer-links">
-                    <Link to="/pricing" className="footer-link">Pricing</Link>
                     <Link to="/changelog" className="footer-link">Changelog</Link>
                     <a href="https://sprout-4sz.pages.dev/space/bhculturecalendar" target="_blank" rel="noopener noreferrer" className="footer-link">
                         Submit your idea

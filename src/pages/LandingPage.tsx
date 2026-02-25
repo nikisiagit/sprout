@@ -68,6 +68,7 @@ export function LandingPage() {
                     <img src={logo} alt="Sprout" className="logo-img" />
                 </Link>
                 <div className="nav-actions">
+                    <Link to="/pricing" className="nav-link">Pricing</Link>
                     {!isCheckingAuth && (
                         isLoggedIn ? (
                             <Link to="/profile" className="nav-btn">Dashboard</Link>
@@ -87,7 +88,18 @@ export function LandingPage() {
                 </div>
 
                 <h1 className="hero-title">
-                    Build products people <span className="highlight-circle">actually</span> want.
+                    Build products people{' '}
+                    <span className="highlight-circle">
+                        actually
+                        <svg className="circle-draw-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 50" preserveAspectRatio="none">
+                            <path d="M15,35 C15,0 140,0 140,25 C140,50 5,45 10,25 C12,15 20,8 35,8"
+                                fill="none"
+                                stroke="var(--accent-primary)"
+                                strokeWidth="3"
+                                strokeLinecap="round" />
+                        </svg>
+                    </span>{' '}
+                    want.
                 </h1>
 
                 <p className="hero-subtitle">

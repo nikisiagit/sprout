@@ -11,6 +11,7 @@ export function PricingPage() {
                     <img src={logo} alt="Sprout" className="logo-img" />
                 </Link>
                 <div className="nav-actions">
+                    <Link to="/pricing" className="nav-link">Pricing</Link>
                     <Link to="/login" className="nav-link">Sign in</Link>
                     <Link to="/get-started" className="nav-btn">Get Started</Link>
                 </div>
@@ -26,15 +27,30 @@ export function PricingPage() {
                     <div className="pricing-card free-plan">
                         <div className="plan-header">
                             <h2 className="plan-name">Free</h2>
-                            <div className="plan-price">$0<span>/month</span></div>
+                            <div className="plan-price">£0<span>/month</span></div>
                         </div>
                         <ul className="plan-features">
-                            <li><span className="check">✓</span> Create unlimited feedback boards</li>
-                            <li><span className="check">✓</span> Feature upvoting & prioritization</li>
-                            <li><span className="check">✓</span> Custom space branding</li>
-                            <li><span className="check">✓</span> Community support & regular updates</li>
+                            <li><span className="check">✓</span> 1 feedback board per space</li>
+                            <li><span className="check">✓</span> 10 ideas limit</li>
+                            <li><span className="check">✓</span> Idea upvoting and commenting</li>
+                            <li><span className="check">✓</span> Sprout branding</li>
                         </ul>
                         <Link to="/get-started" className="plan-btn">Get Started</Link>
+                    </div>
+
+                    <div className="pricing-card paid-plan">
+                        <div className="plan-header">
+                            <h2 className="plan-name">Paid</h2>
+                            <div className="plan-price">£10<span>/year</span></div>
+                        </div>
+                        <ul className="plan-features">
+                            <li><span className="check">✓</span> Unlimited feedback boards</li>
+                            <li><span className="check">✓</span> Unlimited ideas</li>
+                            <li><span className="check">✓</span> Idea upvoting and commenting</li>
+                            <li><span className="check">✓</span> Custom space branding</li>
+                            <li><span className="check">✓</span> Embedding options</li>
+                        </ul>
+                        <Link to="/get-started" className="plan-btn">Upgrade Now</Link>
                     </div>
                 </div>
             </main>
